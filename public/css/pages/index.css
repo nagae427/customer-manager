@@ -1,7 +1,8 @@
 .customer-list {
     width: 100%;
     max-height: 60vh;
-    overflow: auto;
+    position: relative; /* theadのposition: sticky; の基準点にするため */
+    overflow-y: auto;
 }
 
 .customer-list table {
@@ -11,8 +12,20 @@
     background: #fdfdfd;
 }
 
+thead {
+    background-color: #cacaca;
+    position: sticky; 
+    top: 0;           
+    z-index: 10;      
+    box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.2); 
+}
+
 .thin {
     color: #808080;
+}
+
+.js-clickable-row {
+    cursor: pointer;
 }
 
 tbody tr {
@@ -23,19 +36,26 @@ tbody tr:hover {
     background: #f1f5f7;
 }
 
-.customer-list th,
-.customer-list td {
-    padding: 1rem;
-    text-align: center;
-}
-
 .customer-list th {
+    background-color: #cacaca; /* theadの背景色をthにも適用 */
     color: #333;
     font-weight: normal;
     border-bottom: 1px solid #e0e0e0;
+    padding: 1rem; /* 既存のパディング */
+    text-align: center; /* 既存のテキスト位置 */
+}
+
+tbody tr {
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+tbody tr:hover {
+    background: #f1f5f7;
 }
 
 .customer-list td {
+    padding: 1rem;
+    text-align: center;
     color: #333;
     border-bottom: 1px solid #e0e0e0;
 }

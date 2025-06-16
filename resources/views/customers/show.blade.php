@@ -2,6 +2,7 @@
 
 @section('styles')
     <link rel="stylesheet" href="{{ asset('css/pages/show.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/components/confirm_modal.css') }}">
 @endsection
 
 @section('title', '顧客情報詳細')
@@ -15,15 +16,25 @@
 
 @section('header_actions')
 <div>
+    @if(Auth::check() && Auth::user()->authority === 'admin')
     <a href="{{ route('customers.edit', ['customer' => $customer->id]) }}" title="顧客情報編集" class="btn btn-info"><i class="fas fa-edit"></i>編集</a>
+    @endif
 </div>
 <div>
-    <form action="{{ route('customers.destroy', $customer->id) }}" method="post">
-        @csrf
-        @method('DELETE')
-        <button type="submit" onclick="return confirm('本当に削除しますか？')" title="顧客情報削除" class="btn btn-danger"><i class="fas fa-trash-alt"></i>削除</button>
-    </form>
+    @if(Auth::check() && Auth::user()->authority === 'admin')
+    <button type="button"  
+    class="btn btn-danger btn-sm js-open-modal"
+    data-modal-target="#deleteConfirmationModal" {{--ターゲットとなるモーダルのID。一番外側のdiv--}}
+    data-customer-id="{{ $customer->id }}" 
+    data-customer-name="{{ $customer->customer_name}}">
+        <i class="fas fa-trash-alt"></i>削除
+    </button>
+    @endif
 </div>
+
+{{-- モーダルウィンドウをインクルード  --}}
+@include('partials/confirm_modal')
+
 @endsection
 
 @section('content')
@@ -56,7 +67,11 @@
             <div class="sales">
                 <div class="heading"><p>営業担当者</p></div>
                 <div class="user_name"><p>{{ $customer->user->user_name }}</p></div>
-                <div class="authority"><p>{{ $customer->user->authority }}</p></div>
+                @if(Auth::user()->authority === 'admin')
+                <div class="authority"><p>(管理者)</p></div>
+                @elseif(Auth::user()->authority === 'sales')
+                <div class="sales"><p>(営業担当者)</p></div>
+                @endif
             </div>
         </div>
         {{-- 更新情報、最終更新 --}}
@@ -69,3 +84,9 @@
     </div>
 </div>
 @endsection
+
+{{-- jsを読み込む --}}
+@push('scripts')
+    <script src="{{ asset('js/components/confirm_modal.js') }}"></script>
+    <script src="{{ asset('js/partials/header.js') }}"></script>
+@endpush

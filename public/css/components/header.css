@@ -8,6 +8,15 @@
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
+.header-logo {
+    align-items: center;
+}
+
+.header-logo i {
+    margin-right: 1rem;
+    color: rgb(51, 146, 209);
+}
+
 .user-content {
     display: flex;
     width: 60%;
@@ -26,9 +35,9 @@
 }
 
 .user-content a:hover {
-    background-color: #f0f0f0;
+    background-color: rgba(92, 169, 241, 0.2);
     border-radius: 0.5rem;
-    color: #3f3f3f;
+    color: #226bbe;
 }
 
 /* タイトルとかメッセージ部分 */
@@ -41,6 +50,38 @@
 
 .title {
     font-size: 2rem;
+}
+
+.message-container {
+    position: fixed;
+    top: 5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    pointer-events: none;
+    z-index: 1000;
+    width: 80%;
+    max-width: 600px;
+    color: #fff;
+}
+
+.message.alert {
+    padding: 0.4rem 0.5rem;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: bold;
+    text-align: center;
+    color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* 成功メッセージの色 */
+.message.alert-success {
+    background-color: #28a745;
+}
+
+/* エラーメッセージの色 */
+.message.alert-error {
+    background-color: #dc3545;
 }
 
 .header-actions {

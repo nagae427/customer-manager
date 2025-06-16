@@ -7,8 +7,9 @@
 @section('title', 'ログイン')
 
 @section('content')
-    <div class="login-container">
+    <div class="card login-container">
         <h2>ログイン</h2>
+        <p>アカウント情報を入力してください</p>
         <form action="{{ route('login') }}" method="post">
             @csrf
             <div class="user_id">

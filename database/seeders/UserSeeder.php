@@ -18,37 +18,37 @@ class UserSeeder extends Seeder
 
         $users = [
             [
-                'user_name'  => 'システム管理者', // 漢字名に変更
+                'user_name'  => 'システム管理者',
                 'password'   => Hash::make('password'), // ハッシュ化されたパスワード
                 'authority'  => 'admin', // 管理者権限
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'user_name'  => '田中 太郎', // 漢字名に変更
+                'user_name'  => '田中 太郎',
                 'password'   => Hash::make('password'),
-                'authority'  => 'user', // 通常ユーザー（営業担当者）
+                'authority'  => 'sales', // 営業担当者
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'user_name'  => '佐藤 花子', // 漢字名に変更
+                'user_name'  => '佐藤 花子',
                 'password'   => Hash::make('password'),
-                'authority'  => 'user',
+                'authority'  => 'sales',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'user_name'  => '鈴木 次郎', // 漢字名に変更
+                'user_name'  => '鈴木 次郎', 
                 'password'   => Hash::make('password'),
-                'authority'  => 'user',
+                'authority'  => 'sales',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'user_name'  => '山田 美咲', // 漢字名に変更
+                'user_name'  => '山田 美咲', 
                 'password'   => Hash::make('password'),
-                'authority'  => 'user',
+                'authority'  => 'sales',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],

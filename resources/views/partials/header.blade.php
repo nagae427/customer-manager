@@ -1,6 +1,6 @@
 <div class="separate1">
     <div class="header-logo">
-        <h2>顧客情報管理システム</h2>
+        <h2><i class="fa-solid fa-clipboard"></i>顧客情報管理システム</h2>
     </div>
     <div class="user-content">
         <div class="customers-index">
@@ -13,8 +13,16 @@
             <a href="{{ route('dashboard') }}">ダッシュボード</a>
         </div>
         <div class="user-logged-name">
-            <p>ログイン中: {{ Auth::user()->user_name }}</p>
-            <p>ランク : {{ Auth::user()->authority }}</p>
+            @if(Auth::check()) 
+                <p>{{ Auth::user()->user_name }}
+                @if(Auth::check() && Auth::user()->authority === 'admin')
+                (管理者)</p>
+                @elseif(Auth::check() && Auth::user()->authority === 'sales')
+                (営業担当者)</p> 
+                @endif
+            @else
+            <p>ログインしていません</p>
+            @endif
         </div>
         <div class="logout">
             <form action="{{ route('logout') }}" method="post">
@@ -30,19 +38,20 @@
     <div class="title">
         @yield('header-title')
     </div>
-    <div class="message">
+    <div class="message-container">
         @error('user_id')
-        <div class="text-danger">{{ $message }}</div>
+        <div class="message alert alert-error"><p>{{ $message }}</p></div>
         @enderror
         @if (session('success'))
-        <div class="alert alert-success">
-            {{ session('success')}}
-        </div>
+        <div class="message alert alert-success"><p>{{ session('success')}}</p></div>
         @endif
         @if (session('error'))
-        <div class="alert alert-error">
-            {{ session('error')}}
-        </div>
+        <div class="message alert alert-error"><p>{{ session('error')}}</p></div>
+        @endif
+        @if ($errors->any())
+        @foreach ($errors->all() as $error)
+        <div class="message alert alert-error"><p>{{ $error }}</p></div>
+        @endforeach
         @endif
     </div>
     <div class="header-actions">

@@ -61,7 +61,8 @@
 
 .card.up,
 .card.down {
-    padding: 1rem; /* 上下のカードにパディングを追加 */
+    padding: 1rem;
+    margin-bottom: 1.5rem;
 }
 
 .sales .heading p,

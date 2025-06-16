@@ -35,14 +35,14 @@
         </thead>
         <tbody>
             @foreach($reversed_customers as $customer)
-                <tr>
+                <tr class="js-clickable-row" data-href="{{route('customers.show', ['customer' => $customer->id]) }}">
                     <td><span class="customer-name">{{ $customer->customer_name }}</span> <br> <span class="thin">{{ $customer->customer_name_kana }}</span></td>
                     <td>{{ $customer->contact_person_name }} <br> <span class="thin">{{ $customer->contact_person_name_kana }}</span></td>
                     <td>{{ $customer->contact_person_tel }}</td>
                     <td>{{ $customer->area->area_name }}</td>
                     <td>{{ $customer->user->user_name }}</td>
                     <td><span class="thin">{{ $customer->updated_at->format('Y/m/d H:i') }}</span></td>
-                    <td class="actions">
+                    <td class="actions js-no-link">
                         <a href="{{ route('customers.show', ['customer' => $customer->id]) }}" title="顧客情報詳細"><i class="fas fa-eye"></i></a>
                         @if(Auth::check() && Auth::user()->authority === 'admin')
                         <a href="{{ route('customers.edit', ['customer' => $customer->id]) }}" title="顧客情報編集"><i class="fas fa-edit"></i></a>
@@ -68,7 +68,9 @@
 
 @endsection
 
-{{-- customer_modal.jsを読み込む --}}
+{{-- jsを読み込む --}}
 @push('scripts')
     <script src="{{ asset('js/components/confirm_modal.js') }}"></script>
+    <script src="{{ asset('js/pages/index.js') }}"></script>
+    <script src="{{ asset('js/partials/header.js') }}"></script>
 @endpush

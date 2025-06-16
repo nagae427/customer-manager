@@ -16,7 +16,7 @@ return new class extends Migration
 
             $table->string('user_name', 50);
             $table->string('password', 255);   // パスワード（ハッシュ化されるので長めに）、必須
-            $table->string('authority')->default('user');       // デフォルトはuserにする
+            $table->string('authority')->default('sales');       // デフォルトはsalesにする
             $table->timestamps();
         });
     }
