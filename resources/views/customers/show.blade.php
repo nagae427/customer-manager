@@ -1,14 +1,14 @@
 @extends('layouts.app')
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/pages/show.css') }}">
-        <link rel="stylesheet" href="{{ asset('css/components/confirm_modal.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/customers/show.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/partials/confirm_modal.css') }}">
 @endsection
 
 @section('title', '顧客情報詳細')
 
 @section('header-title')
-<a href="{{ route(('customers.index')) }}" title="戻る">
+<a href="{{ $previousUrl }}" title="戻る">
     <i class="fas fa-arrow-left"></i>
 </a>
 <span>顧客情報詳細</span>

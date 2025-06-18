@@ -7,7 +7,7 @@ use App\Models\Customer;
 use App\Models\Area;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
-use Exception; 
+use Exception;
 use Illuminate\Support\Facades\Log;
 
 class CustomerController extends Controller
@@ -15,16 +15,18 @@ class CustomerController extends Controller
     //顧客一覧表示
     public function index()
     {
+        $previousUrl = url()->previous();
         $customers = Customer::with('area', 'user')->get();
         $reversed_customers = collect($customers)->reverse();
-        return view('customers.index', compact('reversed_customers'));
+        return view('customers.index', compact('previousUrl', 'reversed_customers'));
     }
 
     //顧客詳細表示
     public function show($id)
     {
+        $previousUrl = url()->previous(); //前のページのurlも渡して戻れるようにしている 
         $customer = Customer::with(['area', 'user'])->findOrFail($id);
-        return view('customers.show', compact('customer'));
+        return view('customers.show', compact('customer', 'previousUrl'));
     }
 
     //新規顧客登録
@@ -72,7 +74,7 @@ class CustomerController extends Controller
         //セッションになかったらエラー表示
         if (!$customer_data) {
             return redirect('customer.create')->with('error', '登録情報が見つからず、登録できませんでした。再度入力してください');
-        }        
+        }
 
         //ルールを決める
         $rules = [
@@ -93,8 +95,8 @@ class CustomerController extends Controller
         //バリデーション失敗したら
         if ($validator->fails()) {
             //入力フォームへリダイレクト
-            return redirect()->route('customer.create')
-            ->withErrors($validator)->withInput($customer_data); 
+            return redirect()->route('customers.create')
+                ->withErrors($validator)->withInput($customer_data);
         }
 
         //バリデーションを追加したデータのみを取得
@@ -107,9 +109,9 @@ class CustomerController extends Controller
             //成功したらメッセージ
             $request->session()->forget('customer_data');
             return redirect()->route('customers.index')->with('success', "{$validatedData['customer_name']} さんを登録しました。");
-        } catch (Exception $e){
+        } catch (Exception $e) {
             Log::error("エラーが発生しました: {$e->getMessage()}");
-            return redirect()->route('customer.create')->with('error', '顧客情報の登録中にエラーが発生しました。もう一度お試しください');
+            return redirect()->route('customers.create')->with('error', '顧客情報の登録中にエラーが発生しました。もう一度お試しください');
         }
     }
 
@@ -132,7 +134,7 @@ class CustomerController extends Controller
 
         $areas = Area::all(); //全員取ってくる。selectタグ用
         $users = User::all(); //全員取ってくる。selectタグ用
-        
+
         $previousUrl = url()->previous(); //前のページのurlも渡して戻れるようにしている
 
         return view('customers.edit', compact('customer', 'users', 'areas', 'previousUrl'));
@@ -164,7 +166,7 @@ class CustomerController extends Controller
             $selectedUser = User::find($validated['user_id']);
         }
 
-        return view('customers.update_confirm', compact('validated', 'selectedArea', 'selectedUser','customer'));
+        return view('customers.update_confirm', compact('validated', 'selectedArea', 'selectedUser', 'customer'));
     }
 
     public function update(Request $request, Customer $customer)
@@ -175,7 +177,7 @@ class CustomerController extends Controller
         //セッションになかったらエラー表示
         if (!$customer_data) {
             return redirect('customer.edit')->with('error', '更新情報が見つからず、更新できませんでした。再度入力してください');
-        }        
+        }
 
         //ルールを決める
         $rules = [
@@ -197,7 +199,7 @@ class CustomerController extends Controller
         if ($validator->fails()) {
             //入力フォームへリダイレクト
             return redirect()->route('customer.edit')
-            ->withErrors($validator)->withInput($customer_data); 
+                ->withErrors($validator)->withInput($customer_data);
         }
 
         //バリデーションを追加したデータのみを取得
@@ -210,19 +212,20 @@ class CustomerController extends Controller
             //成功したらメッセージ
             $request->session()->forget('customer_data');
             return redirect()->route('customers.index')->with('success', "{$validatedData['customer_name']} さんを登録しました。");
-        } catch (Exception $e){
+        } catch (Exception $e) {
             Log::error("エラーが発生しました: {$e->getMessage()}");
             return redirect()->route('customer.edit')->with('error', '顧客情報の登録中にエラーが発生しました。もう一度お試しください');
         }
     }
 
-    public function destroy(Customer $customer) {
+    public function destroy(Customer $customer)
+    {
         try {
             $customerName = $customer->customer_name;  //削除前に名前を保持
             $customer->delete();
 
-            return redirect()->route('customers.index')->with('success',"{$customerName}さんの顧客情報を削除しました。");
-        } catch(Exception $e) {
+            return redirect()->route('customers.index')->with('success', "{$customerName}さんの顧客情報を削除しました。");
+        } catch (Exception $e) {
             Log::error("顧客情報の削除中にエラーが発生しました: ID={$customer->id}, エラー: {$e->getMessage()}");
             return redirect()->route('customers.index')->with('error', '顧客情報の削除中にエラーが発生しました。もう一度お試しください。');
         }

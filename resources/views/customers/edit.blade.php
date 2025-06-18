@@ -3,7 +3,7 @@
 @section('title', '顧客情報登録') 
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/pages/create.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/customers/create.css') }}">
 @endsection
 
 @section('header-title')
@@ -35,8 +35,8 @@
             </div>
 
             <div class="form-item">
-                <label for="area_id">地区情報<span>*</span></label><br>
-                <select id="area_id" name="area_id" required>
+                <label for="area_id">地区情報</label><br>
+                <select id="area_id" name="area_id">
                     <option value="">選択してください</option>
                     @foreach($areas as $area)
                         <option value="{{ $area->id }}" {{ old('area_id', $customer->area_id) == $area->id ? 'selected' : '' }}>
@@ -60,7 +60,7 @@
             
             <div class="form-item">
                 <label for="contact_person_name_kana">担当者名(かな)<span>*</span></label><br>
-                <input type="text" id="contact_person_name_kana" name="contact_person_name_kana" maxlength="50" placeholder="例: やまだ たろう" value="{{ old('contact_person_name_kana', $customer->contact_person_name_kana) }}">
+                <input type="text" id="contact_person_name_kana" name="contact_person_name_kana" maxlength="50" required placeholder="例: やまだ たろう" value="{{ old('contact_person_name_kana', $customer->contact_person_name_kana) }}">
             </div>
         </div>
 

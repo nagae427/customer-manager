@@ -3,7 +3,7 @@
 @section('title', '顧客情報登録確認')
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/pages/create.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/customers/create.css') }}">
 @endsection
 
 @section('header-title')

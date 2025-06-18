@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\ValidationException;
 
 class LoginController extends Controller
 {
@@ -23,23 +23,30 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
+        //空の場合
+        $messages = [
+        'user_id.required' => 'ユーザIDは必須です。',
+        'password.required' => 'パスワードは必須です。',
+        ];
+
+        //空の場合はここで処理が停止し、必須エラーメッセージをフォームに送る
         $credentials = $request->validate([
-            'user_id' => ['required', 'exists:users,id'],
-            'password' => ['required'],
-        ]);
+            'user_id' => ['required', 'string'],
+            'password' => ['required', 'string'],
+        ], $messages);
 
-
-        $user = \App\Models\User::where('id', $credentials['user_id'])->first();
-
-        if ($user && Hash::check($credentials['password'], $user->password)) {  //パスワードのハッシュ値が一致するかの確認
-            Auth::login($user, $request->filled('remenber'));
-            $request->session()->regenerate(); //セッション固定攻撃を防ぐ
+        //ここに到達したということは、入力欄が少なくとも一文字以上入力されているということ
+        if (Auth::attempt(['id' => $credentials['user_id'], 'password' => $credentials['password']])) {
+            $request->session()->regenerate();  //セッションIDを新しいものにする(セッション固定攻撃対策)
             return redirect()->intended('dashboard');
         }
 
-        return back()->withErrors([
-            'user_id' => 'ユーザIDが違います',
-            'password' => 'パスワードが違います',
-        ])->onlyInput('user_id');   //user_idは残しておく、passwordはセキュリティのために再入力させる
+        // 認証失敗
+        // ValidationException をスローし、user_id と password の両方のエラーメッセージを含める
+        //ValidationException は自動でエラーメッセージがセッションにフラッシュされ、ユーザが直前のページにリダイレクトされる。
+        // return back()->withErrors()がいらない
+        throw ValidationException::withMessages([
+            'error' => ['入力されたユーザーIDまたはパスワードが正しくありません。'], // エラーメッセージ
+        ]);
     }
 }

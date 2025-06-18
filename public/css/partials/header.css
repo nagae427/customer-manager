@@ -40,12 +40,24 @@
     color: #226bbe;
 }
 
+.admin {
+    color: #842029;
+    background: #f8d7da;
+    border-radius: 0.5rem;
+}
+
+.sales {
+    color: #004085;
+    background: #cce5ff;
+    border-radius: 0.5rem;
+}
+
 /* タイトルとかメッセージ部分 */
 .separate2 {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 1.5rem 2.5rem;
+    padding: 1rem 2.5rem;
 }
 
 .title {
@@ -80,8 +92,9 @@
 }
 
 /* エラーメッセージの色 */
-.message.alert-error {
-    background-color: #dc3545;
+.alert-danger { /* このように変更 */
+    background-color: #dc3545; /* 赤系の背景色 */
+    color: #fff; /* 文字色を白にするなど、見えやすい色に */
 }
 
 .header-actions {

@@ -1,0 +1,189 @@
+.greet {
+    font-size: 1rem;
+}
+
+main {
+    display: flex;
+    gap: 1rem;
+}
+
+.left {
+    flex: 3;
+    width: 70%;
+    max-height: 60vh;
+    position: relative;
+    /* theadのposition: sticky; の基準点にするため */
+    overflow-y: auto;
+    margin: 0 auto;
+    padding: 1rem 0;
+}
+
+.list-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.8rem 1.5rem;
+    padding-bottom: 0.8rem;
+    border-bottom: 1px solid #eee;
+}
+
+.header-title span {
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+
+.all-show a {
+    text-decoration: none;
+    color: #007bff;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.all-show a:hover {
+    color: rgba(11, 96, 255, 0.6);
+}
+
+.customer {
+    background-color: rgb(245, 248, 250);
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 0.7rem auto;
+    width: 90%;
+    height: 3.7rem;
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.customer-title {
+    margin: auto 0.5rem;
+}
+
+.customer:hover {
+    background-color: rgb(221, 222, 224);
+}
+
+.customer-name {
+    font-size: 1.3rem;
+}
+
+.thin {
+    font-size: 0.9rem;
+    color: #808080;
+}
+
+.actions {
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+}
+
+.actions a,
+.actions form {
+    display: inline-block;
+    /*インラインにしかvertical-alignは指定できない*/
+    margin: 0 0.4rem;
+    padding: 0;
+    line-height: 1;
+    vertical-align: middle;
+}
+
+.actions button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    margin: 0 0.4rem;
+    vertical-align: middle;
+    /* ボタン内のアイコンの垂直方向のズレを調整 */
+    line-height: 1;
+}
+
+.actions .fa-eye {
+    color: #007bff;
+    font-size: 1.3em;
+}
+
+.actions .fa-edit {
+    color: #333;
+    font-size: 1.3em;
+}
+
+.actions .fa-trash-alt {
+    color: #dc3545;
+    font-size: 1.3em;
+}
+
+.actions a:hover i,
+.actions button:hover i {
+    opacity: 0.6;
+}
+
+.actions a:hover .fa-eye {
+    color: #0056b3;
+}
+
+.actions a:hover .fa-edit {
+    color: #000;
+}
+
+.actions button:hover .fa-trash-alt {
+    color: #c82333;
+}
+
+.right {
+    flex: 2;
+}
+
+.count {
+    height: 4.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.count-sales {
+    margin-bottom: 2rem;
+}
+
+.quick-actions {
+    padding: 0.5rem 1rem;
+}
+
+.quick-title {
+    padding-bottom: 0.8rem;
+    border-bottom: 1px solid #eee;
+}
+
+.quick-title span {
+    margin: 0.3rem 1rem;
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+
+.quick-action {
+    display: flex;
+    height: 3rem;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    background-color: #f3f9ff;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 0.7rem;
+}
+
+.quick-action a {
+    font-size: 1.5rem;
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+    align-items: center;
+    padding: 0.38rem 0.8rem;
+}
+
+.quick-action:hover {
+    background-color: rgba(92, 169, 241, 0.2);
+    border-radius: 0.5rem;
+    color: #226bbe;
+}

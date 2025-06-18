@@ -4,11 +4,14 @@
 @section('title', '顧客情報一覧')
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/pages/index.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/components/confirm_modal.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/customers/index.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/partials/confirm_modal.css') }}">
 @endsection
 
 @section('header-title')
+<a href="{{ $previousUrl }}" title="戻る">
+    <i class="fas fa-arrow-left"></i>
+</a>
 <span>顧客情報一覧</span>
 @endsection
 
@@ -39,8 +42,8 @@
                     <td><span class="customer-name">{{ $customer->customer_name }}</span> <br> <span class="thin">{{ $customer->customer_name_kana }}</span></td>
                     <td>{{ $customer->contact_person_name }} <br> <span class="thin">{{ $customer->contact_person_name_kana }}</span></td>
                     <td>{{ $customer->contact_person_tel }}</td>
-                    <td>{{ $customer->area->area_name }}</td>
-                    <td>{{ $customer->user->user_name }}</td>
+                    <td>{{ $customer->area?->area_name }}</td>
+                    <td>{{ $customer->user?->user_name }}</td>
                     <td><span class="thin">{{ $customer->updated_at->format('Y/m/d H:i') }}</span></td>
                     <td class="actions js-no-link">
                         <a href="{{ route('customers.show', ['customer' => $customer->id]) }}" title="顧客情報詳細"><i class="fas fa-eye"></i></a>

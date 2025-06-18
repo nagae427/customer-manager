@@ -6,14 +6,20 @@ use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
+use Illuminate\Support\Facades\Auth;
 
+//初めの '/' へのアクセス
 Route::get('/', function () {
-    return view('welcome');
+    if (Auth::check()) {
+        return redirect()->route('dashboard');
+    }
+
+    return redirect()->route('login');
 });
 
 //ログイン関係
 Route::get('/login', [LoginController::class, 'showLoginForm'])->middleware('guest')->name('login');
-Route::post('login', [LoginController::class, 'login']);
+Route::post('login', [LoginController::class, 'login'])->middleware('guest')->name('login_post');
 Route::post('logout', [LogoutController::class, 'logout'])->name('logout');
 
 Route::middleware(['auth'])->group(function () {
@@ -39,7 +45,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
     Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update');
     Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
-    Route::get('/users/{user}/confirm', [UserController::class, 'confirm'])->name('users.confirm');
     Route::post('/users/confirm', [UserController::class, 'storeConfirm'])->name('users.store_confirm');
-    Route::put('/users/{user}/confirm', [UserController::class, 'updateConfirm'])->name('users.update_confirm');
+    Route::post('/users/{user}/confirm', [UserController::class, 'updateConfirm'])->name('users.update_confirm');
 });

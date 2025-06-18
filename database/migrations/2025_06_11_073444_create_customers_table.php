@@ -16,9 +16,9 @@ return new class extends Migration
 
             $table->string('customer_name', 50);
             $table->string('customer_name_kana', 100);
-            $table->string('postal_code', 8);
-            $table->unsignedBigInteger('area_id');  //外部キー
-            $table->string('address');
+            $table->string('postal_code', 8)->nullable();
+            $table->unsignedBigInteger('area_id')->nullable();  //外部キー
+            $table->string('address')->nullable();
             $table->string('contact_person_name', 30);
             $table->string('contact_person_name_kana', 50);
             $table->string('contact_person_tel', 20);

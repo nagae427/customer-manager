@@ -3,7 +3,7 @@
 @section('title', '顧客情報登録') 
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/pages/create.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/customers/create.css') }}">
 @endsection
 
 @section('header-title')
@@ -15,13 +15,20 @@
 
 @section('content')
 <div class="card create-edit-container">
-    <form action="{{ route('customers.store_confirm') }}" method="POST">
+    <form action="{{ route('customers.store_confirm') }}" method="POST" class="h-adr">
         @csrf
+        {{-- 国名のspanタグに class="p-country-name" をセット、隠しフィールド --}}
+        <span class="p-country-name" style="display:none;">Japan</span>
+
         <div class="form-items">
             <div class="form-item">
                 <label for="customer_name">顧客名<span>*</span></label><br>
                 <input type="text" id="customer_name" name="customer_name" maxlength="50" required placeholder="例: 株式会社ABC" value="{{ old('customer_name') }}">
             </div>
+            @error('customer_name')
+            <div class="text-danger">{{ $message }}</div>
+            @enderror
+
             <div class="form-item">
                 <label for="customer_name_kana">顧客名(かな)<span>*</span></label><br>
                 <input type="text" id="customer_name_kana" name="customer_name_kana" maxlength="100" required placeholder="例: かぶしきがいしゃえーびーしー" value="{{ old('customer_name_kana') }}">
@@ -31,12 +38,12 @@
         <div class="form-items">
             <div class="form-item">
                 <label for="postal_code">郵便番号</label><br>
-                <input type="text" id="postal_code" name="postal_code" maxlength="8" placeholder="例: 123-4567" value="{{ old('postal_code') }}">
+                <input type="text" id="hyphenInput" class="p-postal-code" name="postal_code" maxlength="8" placeholder="例: 123-4567" value="{{ old('postal_code') }}">
             </div>
 
             <div class="form-item">
-                <label for="area_id">地区情報<span>*</span></label><br>
-                <select id="area_id" name="area_id" required>
+                <label for="area_id">地区情報</label><br>
+                <select id="area_id" name="area_id" class="p-region-id">
                     <option value="">選択してください</option>
                     @foreach($areas as $area)
                     <option value="{{ $area->id }}" {{ old('area_id') == $area->id ? 'selected' : '' }}>
@@ -49,7 +56,7 @@
 
         <div class="form-item">
             <label for="address">住所</label><br>
-            <input type="text" id="address" name="address" maxlength="255" placeholder="例: 東京都千代田区千代田1-1-1" value="{{ old('address') }}">
+            <input type="text" class="p-region p-locality p-street-address p-extended-address" id="address" name="address" maxlength="255" placeholder="例: 東京都千代田区千代田1-1-1" value="{{ old('address') }}">
         </div>
 
         <div class="form-items">
@@ -60,7 +67,7 @@
             
             <div class="form-item">
                 <label for="contact_person_name_kana">担当者名(かな)<span>*</span></label><br>
-                <input type="text" id="contact_person_name_kana" name="contact_person_name_kana" maxlength="50" placeholder="例: やまだ たろう" value="{{ old('contact_person_name_kana') }}">
+                <input type="text" id="contact_person_name_kana" name="contact_person_name_kana" maxlength="50" placeholder="例: やまだ たろう" value="{{ old('contact_person_name_kana') }}" required>
             </div>
         </div>
 
@@ -93,4 +100,9 @@
         </div>
     </form>
 </div>
+@endsection
+
+@section('scripts')
+<script src="https://yubinbango.github.io/yubinbango/yubinbango.js" charset="UTF-8"></script>
+<script src="{{ asset('js/pages/create.js') }}"></script>
 @endsection

@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->bigIncrements('id');
-
             $table->string('user_name', 50);
+            $table->string('user_name_kana', 100);
             $table->string('password', 255);   // パスワード（ハッシュ化されるので長めに）、必須
             $table->string('authority')->default('sales');       // デフォルトはsalesにする
             $table->timestamps();
