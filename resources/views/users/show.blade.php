@@ -21,7 +21,7 @@
     @endif
 </div>
 <div>
-    @if(Auth::check() && Auth::user()->authority === 'admin' && Auth::user()->id !== $user->id)
+    @if(Auth::check() && Auth::user()->authority === 'admin' && Auth::user()->id !== $user->id && $user->customers->count() == 0)
     <button type="button"  
     class="btn btn-danger btn-sm js-open-modal"
     data-modal-target="#deleteConfirmationModal" {{--ターゲットとなるモーダルのID。一番外側のdiv--}}

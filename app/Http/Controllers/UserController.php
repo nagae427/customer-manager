@@ -13,16 +13,17 @@ class userController extends Controller
     public function index() {
         $previousUrl = url()->previous();
 
-        $users = User::withCount('customers')->get();  //customers_countというカラムが追加された
+        $users = User::all();  
 
         return view('users.index', compact('previousUrl', 'users'));
     }
 
     //顧客詳細表示
-    public function show($id)
+    public function show(User $user)
     {
         $previousUrl = url()->previous();
-        $user = User::findOrFail($id);
+
+        //顧客も取得する
         $user->load('customers'); // ここで顧客情報を事前ロードする N+1問題解決
         return view('users.show', compact('previousUrl', 'user'));
     }
@@ -84,6 +85,8 @@ class userController extends Controller
 
         //保存する
         try {
+            //パスワードはハッシュ化して保存
+            $validatedData['password'] = bcrypt($validatedData['password']);
             User::create($validatedData);
 
             //成功したらメッセージ

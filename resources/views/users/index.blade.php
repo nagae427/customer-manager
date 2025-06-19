@@ -44,7 +44,7 @@
                         <span class="sales">営業担当者</span>
                         @endif
                     </td> 
-                    <td>{{ $user->customers_count }} 人</td>
+                    <td>{{ $user->customers->count() }} 人</td>
                     <td><span class="thin">{{ $user->updated_at->format('Y/m/d H:i') }}</span></td>
                     <td class="actions js-no-link">
                         <a href="{{ route('users.show', ['user' => $user->id]) }}" title="営業担当者情報詳細"><i class="fas fa-eye"></i></a>
