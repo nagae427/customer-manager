@@ -10,7 +10,9 @@
 }
 
 .user-information {
-    margin: 1rem;
+    margin: 0.5rem 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #cccccc;
 }
 
 .left p {
@@ -20,6 +22,39 @@
 
 .user-name p {
     font-size: 2rem;
+}
+
+.user-customer-container h2 {
+    margin: 0.2rem 1rem;
+    font-weight: normal;
+}
+
+.user-customer-content {
+    display: flex;
+    margin: 1rem 1.5rem;
+    justify-content: space-between; 
+    padding: 0.2rem 1rem;
+    border: 1px solid #cccccc;
+    border-radius: 0.5rem;
+}
+
+.user-customer-container p {
+    margin: 1rem 1.5rem;
+    padding: 0.2rem 1rem;
+}
+
+.name h2,
+.name p {
+    margin: 0;
+}
+
+.js-clickable-row {
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.js-clickable-row:hover {
+    background: #f1f5f7;
 }
 
 .kana p {
@@ -72,4 +107,42 @@
 .update p {
     margin: 0; 
     line-height: 1.5; 
+}
+
+.actions .fa-eye {
+    color: #007bff;
+    font-size: 1.3em;
+}
+
+.actions .fa-edit {
+    color: #333;
+    font-size: 1.3em;
+}
+
+.actions a:hover i {
+    opacity: 0.6;
+}
+
+.actions a:hover .fa-eye {
+    color: #0056b3;
+}
+
+.actions a:hover .fa-edit {
+    color: #000;
+}
+
+.actions a,
+.actions form {
+    display: inline-block;
+    /*インラインにしかvertical-alignは指定できない*/
+    margin: 0 0.4rem;
+    padding: 0;
+    line-height: 1;
+    vertical-align: middle;
+}
+
+.actions {
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
 }

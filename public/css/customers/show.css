@@ -65,12 +65,12 @@
     margin-bottom: 1.5rem;
 }
 
-.sales .heading p,
-.update .heading p {
+.heading p,
+.heading p {
     margin-bottom: 0.5rem; 
 }
 
-.sales p,
+.sales-content p,
 .update p {
     margin: 0; 
     line-height: 1.5; 

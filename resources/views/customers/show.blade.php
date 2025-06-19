@@ -64,7 +64,7 @@
     <div class="right">
         {{-- 営業担当者、ランク --}}
         <div class="card up">
-            <div class="sales">
+            <div class="sales-content">
                 <div class="heading"><p>営業担当者</p></div>
                 <div class="user_name"><p>{{ $customer->user->user_name }}</p></div>
                 @if(Auth::user()->authority === 'admin')

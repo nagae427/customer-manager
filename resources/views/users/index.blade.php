@@ -18,7 +18,7 @@
     @if(Auth::check() && Auth::user()->authority === 'admin')
     <a href="{{ route('users.create') }}" title="新規営業担当者登録" class="btn btn-info">新規営業担当者登録</a>
     @endif
-@endsection    
+@endsection
 
 @section('content')
 <div class="card user-list">
@@ -28,6 +28,7 @@
             <tr>
                 <th>営業担当者名</th>
                 <th>権限</th>
+                <th>顧客人数</th>
                 <th>更新日時</th>
                 <th>操作</th>
             </tr>
@@ -43,20 +44,12 @@
                         <span class="sales">営業担当者</span>
                         @endif
                     </td> 
+                    <td>{{ $user->customers_count }} 人</td>
                     <td><span class="thin">{{ $user->updated_at->format('Y/m/d H:i') }}</span></td>
                     <td class="actions js-no-link">
                         <a href="{{ route('users.show', ['user' => $user->id]) }}" title="営業担当者情報詳細"><i class="fas fa-eye"></i></a>
                         @if(Auth::check() && Auth::user()->authority === 'admin')
                         <a href="{{ route('users.edit', ['user' => $user->id]) }}" title="営業担当者情報編集"><i class="fas fa-edit"></i></a>
-                        @endif
-                        @if(Auth::check() && Auth::user()->authority === 'admin' && Auth::user()->id !== $user->id)
-                            <button type="button"  
-                            class="btn-sm js-open-modal"
-                            data-modal-target="#deleteConfirmationModal" {{--ターゲットとなるモーダルのID。一番外側のdiv--}}
-                            data-user-id="{{ $user->id }}" 
-                            data-user-name="{{ $user->user_name}}">
-                                <i class="fas fa-trash-alt"></i>
-                            </button>
                         @endif
                     </td>
                 </tr>

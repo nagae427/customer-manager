@@ -13,7 +13,7 @@ class userController extends Controller
     public function index() {
         $previousUrl = url()->previous();
 
-        $users = User::all();
+        $users = User::withCount('customers')->get();  //customers_countというカラムが追加された
 
         return view('users.index', compact('previousUrl', 'users'));
     }
@@ -21,8 +21,9 @@ class userController extends Controller
     //顧客詳細表示
     public function show($id)
     {
-        $previousUrl = url()->previous(); //前のページのurlも渡して戻れるようにしている 
-        $user = user::findOrFail($id);
+        $previousUrl = url()->previous();
+        $user = User::findOrFail($id);
+        $user->load('customers'); // ここで顧客情報を事前ロードする N+1問題解決
         return view('users.show', compact('previousUrl', 'user'));
     }
 

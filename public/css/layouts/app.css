@@ -17,6 +17,7 @@ select {
     padding: 0 0.75rem;
     /* ボックスモデルをborder-boxに設定して、paddingやborderを含めてwidth計算 */
     box-sizing: border-box;
+    border-radius: 0.5rem;
 }
 
 input:focus,
