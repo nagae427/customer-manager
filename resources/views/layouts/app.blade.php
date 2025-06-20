@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="{{ asset('css/layouts/app.css') }}">
     <link rel="stylesheet" href="{{ asset('css/partials/header.css') }}">
     <link rel="stylesheet" href="{{ asset('css/partials/button.css') }}">
+    {{-- 各ファイルのCSSをここで読み込む --}}
     @yield('styles') 
 
     {{-- font-awesomeから取ってくるために --}}
@@ -14,12 +15,17 @@
     <title>@yield('title', 'タイトルが指定されていません')</title>
 </head>
 <body>
+    {{-- ヘッダー --}}
     <header class="header-container">
         @include('partials.header')
     </header>
+    
+    {{-- メインコンテンツ --}}
     <main>
         @yield('content')
     </main>
+
+    {{-- jsを読み込むのに必要 --}}
     @stack('scripts')
 </body>
 </html>

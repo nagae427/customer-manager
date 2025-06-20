@@ -2,42 +2,58 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 1.5rem;
+    padding: 0.3rem 1.5rem;
     background: white;
     position: sticky;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
-.header-logo {
+.header-left {
+    display: flex;
     align-items: center;
+    gap: 3rem;
 }
 
-.header-logo i {
+.header-title {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: black;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.header-title i {
     margin-right: 1rem;
     color: rgb(51, 146, 209);
 }
 
-.user-content {
+.header-nav {
     display: flex;
-    width: 60%;
     align-items: center;
-    justify-content: space-between;
+    gap: 1rem;
 }
 
-.user-content a {
-    font-size: 1.5rem;
-    color: black;
+.header-nav a {
+    display: flex;
+    align-items: center;
     text-decoration: none;
-    cursor: pointer;
-    transition: background-color 0.2s ease, color 0.2s ease;
-    align-items: center;
+    color: black;
+    font-size: 1.3rem;
     padding: 0.5rem 0.8rem;
+    transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-.user-content a:hover {
+.header-nav a:hover {
     background-color: rgba(92, 169, 241, 0.2);
     border-radius: 0.5rem;
     color: #226bbe;
+}
+
+.user-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
 }
 
 .admin {

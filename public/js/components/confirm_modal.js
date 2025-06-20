@@ -23,19 +23,9 @@ document.addEventListener('DOMContentLoaded', function () {
     function closeModal() {
         // モーダルを直接非表示
         deleteConfirmationModal.style.display = 'none';
-
-        // ESCキーでの閉じを無効にする
-        document.removeEventListener('keydown', handleEscapeKey);
     }
 
-    // ESCキーイベントハンドラ
-    function handleEscapeKey(event) {
-        if (event.key === 'Escape' && deleteConfirmationModal.style.display === 'flex') { // displayがflexの時に判定
-            closeModal();
-        }
-    }
-
-
+    
     //クリックされたら開く関数にデータ渡す
     openModalButtons.forEach(button => {
         button.addEventListener('click', function () {

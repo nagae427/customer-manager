@@ -41,15 +41,23 @@
 <div class="show-container">
     {{-- 左のカード(顧客名、担当者、郵便番号、住所) --}}
     <div class="card left">
-        <div class="customer-information">
+        <div class="name-information">
             <div class="customer-name"><p>{{ $customer->customer_name }}</p></div>
             <div class="kana customer-name-kana"><p>{{ $customer->customer_name_kana }}</p></div>
         </div>
         <div class="information">
             <div class=basic-information>
                 <div class="heading"><p>基本情報</p></div>
+                @if($customer->postal_code)
                 <div class="postal-code"><p>{{ $customer->postal_code }}</p></div>
+                @else
+                <div class="postal-code"><p>未登録</p></div>
+                @endif
+                @if($customer->address)
                 <div class="address"><p>{{ $customer->address }}</p></div>
+                @else
+                <div class="address"><p>未登録</p></div>
+                @endif
             </div>
             <div class="contact-information">
                 <div class="heading"><p>担当者情報</p></div>

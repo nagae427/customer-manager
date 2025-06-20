@@ -1,19 +1,21 @@
 <div class="separate1">
-    <div class="header-logo">
-        <h2><i class="fa-solid fa-clipboard"></i>顧客情報管理システム</h2>
+    <div class="header-left">
+        <a href="{{ route('dashboard') }}" class="header-title"><i class="fa-solid fa-clipboard"></i>顧客情報管理システム</a>
+        <div class="header-nav">
+            <div class="customers-index">
+                <a href="{{ route('customers.index') }}">顧客一覧</a>
+            </div>
+            <div class="users-index">
+                <a href="{{ route('users.index') }}">営業担当者一覧</a>
+            </div>
+            <div class="dashboard">
+                <a href="{{ route('dashboard') }}">ダッシュボード</a>
+            </div>
+        </div>
     </div>
 
     @if (Auth::check())
-    <div class="user-content">
-        <div class="customers-index">
-            <a href="{{ route('customers.index') }}">顧客一覧</a>
-        </div>
-        <div class="users-index">
-            <a href="{{ route('users.index') }}">営業担当者一覧</a>
-        </div>
-        <div class="dashboard">
-            <a href="{{ route('dashboard') }}">ダッシュボード</a>
-        </div>
+    <div class="user-right">
         <div class="user-logged-name">
             @if(Auth::check()) 
                 <p>{{ Auth::user()->user_name }}

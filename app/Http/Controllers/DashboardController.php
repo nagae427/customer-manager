@@ -10,7 +10,8 @@ class DashboardController extends Controller
 {
     public function dashboard()
     {
-        $previousUrl = url()->previous(); //前のページのurlも渡して戻れるようにしている 
+        //前のページのurlも渡して戻れるようにしている
+        $previousUrl = url()->previous(); 
 
         //顧客の件数を取得
         $count_customers = Customer::count();

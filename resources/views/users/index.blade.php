@@ -20,9 +20,10 @@
     @endif
 @endsection
 
+{{-- ここからコンテンツ --}}
 @section('content')
 <div class="card user-list">
-    {{-- テーブル --}}
+    {{-- 一覧テーブル --}}
     <table>
         <thead>
             <tr>

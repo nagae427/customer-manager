@@ -15,21 +15,28 @@ class CustomerController extends Controller
     //顧客一覧表示
     public function index()
     {
+        //戻る用のurlを取得
         $previousUrl = url()->previous();
+        //areaとuserを一緒に取得して、顧客一覧を取得
         $customers = Customer::with('area', 'user')->get();
+        //顧客を逆順にして、最新の顧客が一番上に来るようにする
         $reversed_customers = collect($customers)->reverse();
+        //ビューにデータを渡す
         return view('customers.index', compact('previousUrl', 'reversed_customers'));
     }
 
     //顧客詳細表示
-    public function show($id)
+    // ルートバインディング。laravelが自動で$customerをコントローラではCustomerオブジェクトだと認識
+    public function show(Customer $customer)
     {
-        $previousUrl = url()->previous(); //前のページのurlも渡して戻れるようにしている 
-        $customer = Customer::with(['area', 'user'])->findOrFail($id);
+        $previousUrl = url()->previous(); 
+        //$customerからareaとuserをロードする
+        $customer->load(['area', 'user']);
+        //詳細ページに必要なデータをビューに渡す
         return view('customers.show', compact('customer', 'previousUrl'));
     }
 
-    //新規顧客登録
+    //新規顧客登録画面へ
     public function create()
     {
         $areas = Area::all();
@@ -39,6 +46,7 @@ class CustomerController extends Controller
 
     public function storeConfirm(Request $request)
     {
+        //バリデーション確認
         $validated = $request->validate([
             'customer_name' => 'required|string|max:50',
             'customer_name_kana' => 'required|string|max:100',
@@ -51,8 +59,10 @@ class CustomerController extends Controller
             'user_id' => 'required|exists:users,id',
         ]);
 
-        $request->session()->put('customer_data', $validated);  //バリデーション通ったものをセッションに保存
+        //バリデーションが通ったら、セッションに保存
+        $request->session()->put('customer_data', $validated); 
 
+        //選択されたエリアとユーザーを取得
         $selectedArea = null;
         if (!empty($validated['area_id'])) {
             $selectedArea = Area::find($validated['area_id']);
@@ -63,9 +73,11 @@ class CustomerController extends Controller
             $selectedUser = User::find($validated['user_id']);
         }
 
+        //確認画面を表示
         return view('customers.store_confirm', compact('validated', 'selectedArea', 'selectedUser'));
     }
 
+    //新規登録処理
     public function store(Request $request)
     {
         //セッションからとってくる
@@ -115,27 +127,14 @@ class CustomerController extends Controller
         }
     }
 
-    // public function edit($id) 
-    // {
-    //     //方法1 前の書き方
-    //     $customer = Customer::with('area', 'user')->find($id);
-
-    //     if (!$customer) {
-    //         abort(404); //明示的に書いている
-    //     }
-
-    //     return view('customers.edit', compact('customer'));
-    // }
-
-    public function edit(Customer $customer)   //$customerはidだけど自動でインスタンスにしてくれる
+    //顧客情報の編集
+    // ルートバインディング。
+    public function edit(Customer $customer)
     {
-        //方法2 ルートバインディング。laravelが自動でidだと認識し、findしてくれて、$customerを注入してくれる
-        // $customer->load('area', 'user'); //とりあえず今はいらない
+        $areas = Area::all(); 
+        $users = User::all(); 
 
-        $areas = Area::all(); //全員取ってくる。selectタグ用
-        $users = User::all(); //全員取ってくる。selectタグ用
-
-        $previousUrl = url()->previous(); //前のページのurlも渡して戻れるようにしている
+        $previousUrl = url()->previous(); 
 
         return view('customers.edit', compact('customer', 'users', 'areas', 'previousUrl'));
     }
@@ -154,8 +153,10 @@ class CustomerController extends Controller
             'user_id' => 'required|exists:users,id',
         ]);
 
-        $request->session()->put('customer_data', $validated);  //バリデーション通ったものをセッションに保存
+        //バリデーションが通ったら、セッションに保存
+        $request->session()->put('customer_data', $validated);
 
+        //選択されたエリアとユーザーを取得
         $selectedArea = null;
         if (!empty($validated['area_id'])) {
             $selectedArea = Area::find($validated['area_id']);
@@ -221,7 +222,9 @@ class CustomerController extends Controller
     public function destroy(Customer $customer)
     {
         try {
-            $customerName = $customer->customer_name;  //削除前に名前を保持
+            // 削除する顧客名を保持する。withメッセージで使用するため
+            $customerName = $customer->customer_name;  
+            // 顧客情報を削除
             $customer->delete();
 
             return redirect()->route('customers.index')->with('success', "{$customerName}さんの顧客情報を削除しました。");
