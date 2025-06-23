@@ -74,7 +74,7 @@
         <div class="card up">
             <div class="sales-content">
                 <div class="heading"><p>営業担当者</p></div>
-                <div class="user_name"><p>{{ $customer->user->user_name }}</p></div>
+                <div class="user_name"><a href="{{ route('users.show', ['user' => $customer->user->id]) }}">{{ $customer->user->user_name }}</a></div>
                 @if(Auth::user()->authority === 'admin')
                 <div class="authority"><p>(管理者)</p></div>
                 @elseif(Auth::user()->authority === 'sales')

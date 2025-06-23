@@ -17,19 +17,18 @@
             @enderror
             <div class="user-id">
                 <label for="user_id">ユーザID</label>
-                <input type="text" name="user_id" value="{{ old('user_id') }}" placeholder="ユーザIDを入力">
+                <input type="text" name="user_id" value="{{ old('user_id') }}" placeholder="ユーザIDを入力" maxlength="10">
                 @error('user_id')
                     <div class="text-danger" style="color: red;">{{ $message }}</div>
                 @enderror
             </div>
             <div class="password">
                 <label for="password">パスワード</label>
-                <input type="password" name="password" placeholder="パスワードを入力">
+                <input type="password" name="password" placeholder="パスワードを入力" maxlength="20">
                 @error('password')
                 {{-- ここで 'password' の必須エラーメッセージが表示されます --}}
                 <div class="text-danger" style="color: red;">{{ $message }}</div>
                 @enderror
-
             </div>
             <button type="submit" class="btn btn-info">ログイン</button>
         </form>

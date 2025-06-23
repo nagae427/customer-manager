@@ -17,7 +17,12 @@
 <body>
     {{-- ヘッダー --}}
     <header class="header-container">
+        @guest
+        @include('partials.login-header')
+        @endguest
+        @auth
         @include('partials.header')
+        @endauth
     </header>
     
     {{-- メインコンテンツ --}}

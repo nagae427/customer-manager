@@ -1,6 +1,6 @@
 <div class="separate1">
     <div class="header-left">
-        <a href="{{ route('dashboard') }}" class="header-title"><i class="fa-solid fa-clipboard"></i>顧客情報管理システム</a>
+        <a href="{{ route('dashboard') }}" class="header-title" title="ダッシュボードへ"><i class="fa-solid fa-clipboard"></i>顧客情報管理システム</a>
         <div class="header-nav">
             <div class="customers-index">
                 <a href="{{ route('customers.index') }}">顧客一覧</a>

@@ -59,6 +59,15 @@
     font-size: 1.2rem;
 }
 
+.user_name a {
+    color: rgb(87, 87, 87);
+    font-size: 1.1rem;
+}
+
+.user_name a:hover {
+    color: rgb(0, 0, 0);
+}
+
 .card.up,
 .card.down {
     padding: 1rem;
