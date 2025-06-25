@@ -100,7 +100,7 @@ class CustomerController extends Controller
         ]);
 
         //セッションからとってくる
-        $customer_data = $request->session()->get('customer_data');
+        $customer_data = session()->get('customer_data');
 
         //セッション情報とバリデーション後の値を比較する
         if (!$customer_data || $customer_data !== $validated) {

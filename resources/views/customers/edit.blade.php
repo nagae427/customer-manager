@@ -92,7 +92,7 @@
         <div class="form-items">
             <div class="form-item"></div>
             <div class="form-item form-actions">
-                <a href="{{ url()->previous() }}" class="btn btn-back" title="キャンセル">キャンセル</a>
+                <a href="{{ route('customers.index') }}" class="btn btn-back" title="キャンセル">キャンセル</a>
                 <button type="submit" class="btn btn-info" title="確認画面へ">確認画面へ</button>
             </div>
         </div>
