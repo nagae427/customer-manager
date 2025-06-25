@@ -28,7 +28,7 @@ class LogoutController extends Controller
             //ユーザーには見えない詳細なエラー
             Log::error('ログアウト処理中にエラーが発生しました: ' . $e->getMessage() , [
                 'user_id' => Auth::id() ?? 'guest',
-                'ip_address' => $request->ip(),  //IPアドレスも記録するといいらしい
+                'ip_address' => $request->ip(),  //IPアドレスも記録
                 'exception' => $e
             ]);
 

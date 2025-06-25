@@ -18,9 +18,9 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
-        'user_name',
+        'name',
         'password',
-        'authority',
+        'is_admin',
     ];
 
     /**
@@ -30,7 +30,6 @@ class User extends Authenticatable
      */
     protected $hidden = [
         'password',
-        'remember_token',
     ];
 
     /**
@@ -38,14 +37,23 @@ class User extends Authenticatable
      *
      * @return array<string, string>
      */
-    protected function casts(): array
+    protected $casts = [
+        'password' => 'hashed',
+    ];
+
+    /**
+     * 管理者かどうかを判定する
+     */
+    public function isAdmin(): bool
     {
-        return [
-            'password' => 'hashed',
-        ];
+        return $this->is_admin === 'admin';
     }
 
-    //hasManyだからcustomersと複数形
+    public function isSales(): bool
+    {
+        return $this->is_admin === 'sales';
+    }
+
     public function customers()
     {
         return $this->hasMany(Customer::class);

@@ -8,7 +8,7 @@
 @section('title', '顧客情報詳細')
 
 @section('header-title')
-<a href="{{ $previousUrl }}" title="戻る">
+<a href="{{ url()->previous() }}" title="戻る">
     <i class="fas fa-arrow-left"></i>
 </a>
 <span>顧客情報詳細</span>
@@ -16,17 +16,17 @@
 
 @section('header_actions')
 <div>
-    @if(Auth::check() && Auth::user()->authority === 'admin')
-    <a href="{{ route('customers.edit', ['customer' => $customer->id]) }}" title="顧客情報編集" class="btn btn-info"><i class="fas fa-edit"></i>編集</a>
+    @if(Auth::check() && Auth::user()->isAdmin())
+    <a href="{{ route('customers.form', ['customer' => $customer->id]) }}" title="顧客情報編集" class="btn btn-info"><i class="fas fa-edit"></i>編集</a>
     @endif
 </div>
 <div>
-    @if(Auth::check() && Auth::user()->authority === 'admin')
+    @if(Auth::check() && Auth::user()->isAdmin())
     <button type="button"  
     class="btn btn-danger btn-sm js-open-modal"
     data-modal-target="#deleteConfirmationModal" {{--ターゲットとなるモーダルのID。一番外側のdiv--}}
     data-customer-id="{{ $customer->id }}" 
-    data-customer-name="{{ $customer->customer_name}}">
+    data-customer-name="{{ $customer->name }}">
         <i class="fas fa-trash-alt"></i>削除
     </button>
     @endif
@@ -42,8 +42,8 @@
     {{-- 左のカード(顧客名、担当者、郵便番号、住所) --}}
     <div class="card left">
         <div class="name-information">
-            <div class="customer-name"><p>{{ $customer->customer_name }}</p></div>
-            <div class="kana customer-name-kana"><p>{{ $customer->customer_name_kana }}</p></div>
+            <div class="customer-name"><p>{{ $customer->name }}</p></div>
+            <div class="kana customer-name-kana"><p>{{ $customer->name_kana }}</p></div>
         </div>
         <div class="information">
             <div class=basic-information>
@@ -74,11 +74,11 @@
         <div class="card up">
             <div class="sales-content">
                 <div class="heading"><p>営業担当者</p></div>
-                <div class="user_name"><a href="{{ route('users.show', ['user' => $customer->user->id]) }}">{{ $customer->user->user_name }}</a></div>
-                @if(Auth::user()->authority === 'admin')
-                <div class="authority"><p>(管理者)</p></div>
-                @elseif(Auth::user()->authority === 'sales')
-                <div class="sales"><p>(営業担当者)</p></div>
+                <div class="user_name"><a href="{{ route('users.show', ['user' => $customer->user->id]) }}">{{ $customer->user->name }}</a></div>
+                @if(Auth::user()->isAdmin())
+                <div><span class="admin">(管理者)</span></div>
+                @elseif(Auth::user()->isSales())
+                <div><span class="sales">(営業担当者)</span></div>
                 @endif
             </div>
         </div>

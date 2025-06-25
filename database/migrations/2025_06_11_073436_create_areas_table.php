@@ -12,9 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('areas', function (Blueprint $table) {
-            $table->bigIncrements('id'); // area_code
-
-            $table->string('area_name', 100);   
+            $table->id();
+            $table->string('name', 100)->comment('都道府県名');
             $table->timestamps();
         });
 

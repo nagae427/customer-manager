@@ -28,23 +28,17 @@ Route::middleware(['auth'])->group(function () {
 
     // 顧客管理
     Route::get('/customers', [CustomerController::class, 'index'])->name('customers.index');
-    Route::get('/customers/create', [CustomerController::class, 'create'])->name('customers.create');
-    Route::post('/customers', [CustomerController::class, 'store'])->name('customers.store');
+    Route::get('/customers/form/{customer?}', [CustomerController::class, 'createOrEdit'])->name('customers.form'); //登録、編集画面
+    Route::post('/customers/confirm/{customer?}', [CustomerController::class, 'storeOrUpdateConfirm'])->name('customers.save_confirm'); //登録、編集確認
     Route::get('/customers/{customer}', [CustomerController::class, 'show'])->name('customers.show');
-    Route::get('/customers/{customer}/edit', [CustomerController::class, 'edit'])->name('customers.edit');
-    Route::put('/customers/{customer}', [CustomerController::class, 'update'])->name('customers.update');
+    Route::post('/customers/{customer?}', [CustomerController::class, 'storeOrUpdate'])->name('customers.save'); //登録、編集
     Route::delete('/customers/{customer}', [CustomerController::class, 'destroy'])->name('customers.destroy');
-    Route::post('/customers/confirm', [CustomerController::class, 'storeConfirm'])->name('customers.store_confirm');
-    Route::post('/customers/{customer}/confirm', [CustomerController::class, 'updateConfirm'])->name('customers.update_confirm');
 
     // ユーザー（営業担当者）管理
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
-    Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
-    Route::post('/users', [UserController::class, 'store'])->name('users.store');
     Route::get('/users/{user}', [UserController::class, 'show'])->name('users.show');
-    Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
-    Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update');
+    Route::get('/users/form/{user?}', [UserController::class, 'createOrEdit'])->name('users.form'); //登録、編集画面
+    Route::post('/users/confirm/{user?}', [UserController::class, 'storeOrUpdateConfirm'])->name('users.save_confirm'); //登録、編集確認
+    Route::post('/users/{user?}', [UserController::class, 'storeOrUpdate'])->name('users.save'); //登録、編集
     Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
-    Route::post('/users/confirm', [UserController::class, 'storeConfirm'])->name('users.store_confirm');
-    Route::post('/users/{user}/confirm', [UserController::class, 'updateConfirm'])->name('users.update_confirm');
 });

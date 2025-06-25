@@ -2,9 +2,10 @@
 
 namespace Database\Seeders;
 
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB; // DBファサードを使用
+use Carbon\Carbon; // 日付の生成に使用
 
 class CustomerSeeder extends Seeder
 {
@@ -13,91 +14,80 @@ class CustomerSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
-        // 例: 既存のarea_idとuser_idを取得する（本番環境ではこうすると良い）
-        $areaIds = DB::table('areas')->pluck('id')->toArray();  //pluckの引数で指定されたカラム(id)をtoArrayでphpの配列にして返す
-        $userIds = DB::table('users')->pluck('id')->toArray();
-
-        // もしareasテーブルやusersテーブルにデータがない場合のエラー回避
-        if (empty($areaIds)) {
-            echo "areasテーブルにデータがないのでAreaSeederを先に作って\n";
-            return;
-        }
-        if (empty($userIds)) {
-            echo "usersテーブルにデータがないのでUserSeederを先に作って\n";
-            return;
-        }
+        $firstUserId = DB::table('users')->value('id');
+        $firstAreaId = DB::table('areas')->value('id');
 
         $customers = [
             [
-                'customer_name'            => '株式会社あるふぁ', // 漢字とひらがな
-                'customer_name_kana'       => 'かぶしきがいしゃあるふぁ', // ひらがな
-                'postal_code'              => '100-0001',
-                'area_id'                  => $areaIds[array_rand($areaIds)],
-                'address'                  => '東京都千代田区千代田1-1-1',
-                'contact_person_name'      => '山田太郎',
-                'contact_person_name_kana' => 'やまだたろう', // ひらがな
-                'contact_person_tel'       => '03-1111-2222',
-                'user_id'                  => $userIds[array_rand($userIds)],
-                'created_at'               => now(),
-                'updated_at'               => now(),
+                'name' => 'テスト顧客A',
+                'name_kana' => 'テストコキャクエー',
+                'postal_code' => '100-0001',
+                'area_id' => $firstAreaId, 
+                'address' => '東京都千代田区1-1-1',
+                'contact_person_name' => '山田 太郎',
+                'contact_person_name_kana' => 'ヤマダタロウ',
+                'contact_person_tel' => '03-1234-5678',
+                'user_id' => $firstUserId, 
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
             ],
             [
-                'customer_name'            => '有限会社べーた', // 漢字とひらがな
-                'customer_name_kana'       => 'ゆうげんがいしゃべーた', // ひらがな
-                'postal_code'              => '530-0001',
-                'area_id'                  => $areaIds[array_rand($areaIds)],
-                'address'                  => '大阪府大阪市北区梅田2-2-2',
-                'contact_person_name'      => '田中花子',
-                'contact_person_name_kana' => 'たなかはなこ', // ひらがな
-                'contact_person_tel'       => '06-3333-4444',
-                'user_id'                  => $userIds[array_rand($userIds)],
-                'created_at'               => now(),
-                'updated_at'               => now(),
+                'name' => 'サンプル商事',
+                'name_kana' => 'サンプルショウジ',
+                'postal_code' => '530-0001',
+                'area_id' => $firstAreaId, 
+                'address' => '大阪府大阪市北区1-2-3',
+                'contact_person_name' => '田中 花子',
+                'contact_person_name_kana' => 'タナカハナコ',
+                'contact_person_tel' => '06-9876-5432',
+                'user_id' => $firstUserId, 
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
             ],
             [
-                'customer_name'            => '合同会社がんま', // 漢字とひらがな
-                'customer_name_kana'       => 'ごうどうがいしゃがんま', // ひらがな
-                'postal_code'              => '460-0001',
-                'area_id'                  => $areaIds[array_rand($areaIds)],
-                'address'                  => '愛知県名古屋市中区錦3-3-3',
-                'contact_person_name'      => '佐藤健',
-                'contact_person_name_kana' => 'さとうけん', // ひらがな
-                'contact_person_tel'       => '052-555-6666',
-                'user_id'                  => $userIds[array_rand($userIds)],
-                'created_at'               => now(),
-                'updated_at'               => now(),
+                'name' => '株式会社B',
+                'name_kana' => 'カブシキガイシャビー',
+                'postal_code' => '810-0002',
+                'area_id' => $firstAreaId,
+                'address' => '福岡県福岡市中央区4-5-6',
+                'contact_person_name' => '佐藤 健太',
+                'contact_person_name_kana' => 'サトウケンタ',
+                'contact_person_tel' => '092-111-2222',
+                'user_id' => $firstUserId, 
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
             ],
             [
-                'customer_name'            => '株式会社でるた', // 漢字とひらがな
-                'customer_name_kana'       => 'かぶしきがいしゃでるた', // ひらがな
-                'postal_code'              => '810-0001',
-                'area_id'                  => $areaIds[array_rand($areaIds)],
-                'address'                  => '福岡県福岡市中央区天神4-4-4',
-                'contact_person_name'      => '鈴木美咲',
-                'contact_person_name_kana' => 'すずきみさき', // ひらがな
-                'contact_person_tel'       => '092-777-8888',
-                'user_id'                  => $userIds[array_rand($userIds)],
-                'created_at'               => now(),
-                'updated_at'               => now(),
+                'name' => '合同会社C',
+                'name_kana' => 'ゴウドウガイシャシー',
+                'postal_code' => '060-0000',
+                'area_id' => $firstAreaId, 
+                'address' => '北海道札幌市中央区7-8-9',
+                'contact_person_name' => '鈴木 麗奈',
+                'contact_person_name_kana' => 'スズキレイナ',
+                'contact_person_tel' => '011-333-4444',
+                'user_id' => $firstUserId,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
             ],
             [
-                'customer_name'            => '有限会社いぷしろん', // 漢字とひらがな
-                'customer_name_kana'       => 'ゆうげんがいしゃいぷしろん', // ひらがな
-                'postal_code'              => '060-0001',
-                'area_id'                  => $areaIds[array_rand($areaIds)],
-                'address'                  => '北海道札幌市中央区北1条西5-5-5',
-                'contact_person_name'      => '高橋翼',
-                'contact_person_name_kana' => 'たかはしつばさ', // ひらがな
-                'contact_person_tel'       => '011-999-0000',
-                'user_id'                  => $userIds[array_rand($userIds)],
-                'created_at'               => now(),
-                'updated_at'               => now(),
+                'name' => '有限会社D',
+                'name_kana' => 'ユウゲンガイシャディー',
+                'postal_code' => '460-0003',
+                'area_id' => $firstAreaId,
+                'address' => '愛知県名古屋市中区10-11-12',
+                'contact_person_name' => '高橋 雄介',
+                'contact_person_name_kana' => 'タカハシユウスケ',
+                'contact_person_tel' => '052-555-6666',
+                'user_id' => $firstUserId,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
             ],
         ];
 
-        // データを挿入
-        DB::table('customers')->insert($customers);  //データベースに挿入
+        // データベースにデータを挿入
+        DB::table('customers')->insert($customers);
     }
 }

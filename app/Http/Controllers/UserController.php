@@ -10,6 +10,9 @@ use Illuminate\Support\Facades\Log;
 
 class userController extends Controller
 {
+    /**
+     * 営業担当者一覧表示
+     */
     public function index() {
         $previousUrl = url()->previous();
 
@@ -18,7 +21,9 @@ class userController extends Controller
         return view('users.index', compact('previousUrl', 'users'));
     }
 
-    //顧客詳細表示
+    /**
+     * 営業担当者詳細表示
+     */
     public function show(User $user)
     {
         $previousUrl = url()->previous();
@@ -28,13 +33,18 @@ class userController extends Controller
         return view('users.show', compact('previousUrl', 'user'));
     }
 
-    //新規顧客登録
+    /**
+     * 新規顧客登録
+     */
     public function create()
     {
         $user = User::all();
         return view('users.create', compact('users'));
     }
 
+    /**
+     * 新規顧客登録確認画面
+     */
     public function storeConfirm(Request $request)
     {
         $validated = $request->validate([
@@ -53,6 +63,9 @@ class userController extends Controller
         return view('users.store_confirm', compact('validated', 'selectedAuthority'));
     }
 
+    /**
+     * 新規顧客登録処理
+     */
     public function store(Request $request)
     {
         //セッションからとってくる

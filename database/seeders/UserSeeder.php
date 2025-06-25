@@ -3,63 +3,62 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;   // DBファサードをインポート
-use Illuminate\Support\Facades\Hash; // Hashファサードをインポート
+use Illuminate\Support\Facades\DB; // DBファサードを使用
+use Illuminate\Support\Facades\Hash; // パスワードのハッシュ化に使用
+use Carbon\Carbon; // 日付の生成に使用
 
 class UserSeeder extends Seeder
 {
     /**
      * Run the database seeds.
+     *
+     * @return void
      */
     public function run(): void
     {
-        // 既存のデータがあれば一度クリアする（オプション）
-        // DB::table('users')->truncate();
-
         $users = [
             [
-                'user_name'      => 'システム管理者',
-                'user_name_kana' => 'しすてむかんりしゃ', // ★ 追加
-                'password'       => Hash::make('password'), // ハッシュ化されたパスワード
-                'authority'      => 'admin', // 管理者権限
-                'created_at'     => now(),
-                'updated_at'     => now(),
+                'name' => '管理者太郎',
+                'name_kana' => 'カンリシャタロウ',
+                'password' => Hash::make('password'), 
+                'is_admin' => 'admin',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
             ],
             [
-                'user_name'      => '田中 太郎',
-                'user_name_kana' => 'たなか たろう', // ★ 追加
-                'password'       => Hash::make('password'),
-                'authority'      => 'sales', // 営業担当者
-                'created_at'     => now(),
-                'updated_at'     => now(),
+                'name' => '営業一郎',
+                'name_kana' => 'エイギョウイチロウ',
+                'password' => Hash::make('password'),
+                'is_admin' => 'sales', 
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
             ],
             [
-                'user_name'      => '佐藤 花子',
-                'user_name_kana' => 'さとう はなこ', // ★ 追加
-                'password'       => Hash::make('password'),
-                'authority'      => 'sales',
-                'created_at'     => now(),
-                'updated_at'     => now(),
+                'name' => '管理者花子',
+                'name_kana' => 'カンリシャハナコ',
+                'password' => Hash::make('password'),
+                'is_admin' => 'admin',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
             ],
             [
-                'user_name'      => '鈴木 次郎',
-                'user_name_kana' => 'すずき じろう', // ★ 追加
-                'password'       => Hash::make('password'),
-                'authority'      => 'sales',
-                'created_at'     => now(),
-                'updated_at'     => now(),
+                'name' => '営業二郎',
+                'name_kana' => 'エイギョウジロウ',
+                'password' => Hash::make('password'),
+                'is_admin' => 'sales',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
             ],
             [
-                'user_name'      => '山田 美咲',
-                'user_name_kana' => 'やまだ みさき', // ★ 追加
-                'password'       => Hash::make('password'),
-                'authority'      => 'sales',
-                'created_at'     => now(),
-                'updated_at'     => now(),
+                'name' => '管理者三郎',
+                'name_kana' => 'カンリシャサブロウ',
+                'password' => Hash::make('password'),
+                'is_admin' => 'admin',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
             ],
         ];
 
-        // データを挿入
         DB::table('users')->insert($users);
     }
 }

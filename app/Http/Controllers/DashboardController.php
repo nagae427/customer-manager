@@ -17,7 +17,7 @@ class DashboardController extends Controller
         $count_customers = Customer::count();
 
         //営業担当者の数だけ取得
-        $count_sales = User::where('authority', 'sales')->count();
+        $count_sales = User::where('is_admin', 'sales')->count();
 
         //3日前の日付を取得
         $three_days_ago = Carbon::today()->subDays(3);

@@ -9,15 +9,15 @@
 @endsection
 
 @section('header-title')
-<a href="{{ $previousUrl }}" title="戻る">
+<a href="{{ url()->previous() }}" title="戻る">
     <i class="fas fa-arrow-left"></i>
 </a>
 <span>顧客情報一覧</span>
 @endsection
 
 @section('header_actions')
-    @if(Auth::check() && Auth::user()->authority === 'admin')
-    <a href="{{ route('customers.create') }}" title="新規顧客登録" class="btn btn-info">新規顧客登録</a>
+    @if(Auth::check() && Auth::user()->isAdmin())
+    <a href="{{ route('customers.form') }}" title="新規顧客登録" class="btn btn-info">新規顧客登録</a>
     @endif
 @endsection    
 
@@ -37,25 +37,25 @@
             </tr>
         </thead>
         <tbody>
-            @foreach($reversed_customers as $customer)
+            @foreach($customers as $customer)
                 <tr class="js-clickable-row" data-href="{{route('customers.show', ['customer' => $customer->id]) }}">
-                    <td><span class="customer-name">{{ $customer->customer_name }}</span> <br> <span class="thin">{{ $customer->customer_name_kana }}</span></td>
+                    <td><span class="customer-name">{{ $customer->name }}</span> <br> <span class="thin">{{ $customer->name_kana }}</span></td>
                     <td>{{ $customer->contact_person_name }} <br> <span class="thin">{{ $customer->contact_person_name_kana }}</span></td>
                     <td>{{ $customer->contact_person_tel }}</td>
-                    <td>{{ $customer->area?->area_name }}</td>
-                    <td>{{ $customer->user?->user_name }}</td>
+                    <td>{{ $customer->area->name ?? '未設定' }}</td>
+                    <td>{{ $customer->user?->name }}</td>
                     <td><span class="thin">{{ $customer->updated_at->format('Y/m/d H:i') }}</span></td>
                     <td class="actions js-no-link">
                         <a href="{{ route('customers.show', ['customer' => $customer->id]) }}" title="顧客情報詳細"><i class="fas fa-eye"></i></a>
-                        @if(Auth::check() && Auth::user()->authority === 'admin')
-                        <a href="{{ route('customers.edit', ['customer' => $customer->id]) }}" title="顧客情報編集"><i class="fas fa-edit"></i></a>
+                        @if(Auth::check() && Auth::user()->isAdmin())
+                        <a href="{{ route('customers.form', ['customer' => $customer->id]) }}" title="顧客情報編集"><i class="fas fa-edit"></i></a>
                         @endif
-                        @if(Auth::check() && Auth::user()->authority === 'admin')
+                        @if(Auth::check() && Auth::user()->isAdmin())
                         <button type="button"  
                         class="btn-sm js-open-modal"
                         data-modal-target="#deleteConfirmationModal" {{--ターゲットとなるモーダルのID。一番外側のdiv--}}
                         data-customer-id="{{ $customer->id }}" 
-                        data-customer-name="{{ $customer->customer_name}}">
+                        data-customer-name="{{ $customer->name }}">
                             <i class="fas fa-trash-alt"></i>
                         </button>
                         @endif

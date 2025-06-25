@@ -12,11 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('user_name', 50);
-            $table->string('user_name_kana', 100);
-            $table->string('password', 255);   // パスワード（ハッシュ化されるので長めに）、必須
-            $table->string('authority')->default('sales');       // デフォルトはsalesにする
+            $table->id();
+            $table->string('name', 50)->comment('ユーザ名');
+            $table->string('name_kana', 100)->comment('ユーザ名(かな)');
+            $table->string('password', 255); 
+            $table->string('is_admin')->default('sales')->comment('権限 (営業担当者か管理者)');    // デフォルトはsalesにする
             $table->timestamps();
         });
     }

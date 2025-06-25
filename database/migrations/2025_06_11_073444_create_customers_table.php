@@ -12,17 +12,17 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('customers', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->id();
 
-            $table->string('customer_name', 50);
-            $table->string('customer_name_kana', 100);
-            $table->string('postal_code', 8)->nullable();
-            $table->unsignedBigInteger('area_id')->nullable();  //外部キー
-            $table->string('address')->nullable();
-            $table->string('contact_person_name', 30);
-            $table->string('contact_person_name_kana', 50);
-            $table->string('contact_person_tel', 20);
-            $table->unsignedBigInteger('user_id');  //外部キー
+            $table->string('name', 50)->comment('顧客名');
+            $table->string('name_kana', 100)->comment('顧客名(かな)');
+            $table->string('postal_code', 8)->nullable()->comment('郵便番号');
+            $table->unsignedBigInteger('area_id')->nullable()->comment('都道府県ID');
+            $table->string('address')->nullable()->comment('住所');
+            $table->string('contact_person_name', 30)->comment('顧客担当者名');
+            $table->string('contact_person_name_kana', 50)->comment('顧客担当者名(かな)');
+            $table->string('contact_person_tel', 20)->comment('顧客担当者電話番号');
+            $table->unsignedBigInteger('user_id');
 
             $table->timestamps();
 
