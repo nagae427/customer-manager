@@ -7,13 +7,7 @@
 @endsection
 
 @section('header-title')
-<span>
-    @if (isset($customer) && $customer->id)
-        顧客情報編集確認
-    @else
-        顧客情報登録確認
-    @endif
-</span>
+<span>顧客情報編集確認</span>
 @endsection
 
 @section('content')
@@ -71,8 +65,9 @@
     </div>
 
     {{-- 送信 --}}
-    <form action="{{ route('customers.save', ['customer' => $customer->id ?? null]) }}" method="POST">
+    <form action="{{ route('customers.store') }}" method="POST">
         @csrf
+        <input type="hidden" name="id" value="{{ $validated['id'] ?? '' }}">
         <input type="hidden" name="name" value="{{ $validated['name'] }}">
         <input type="hidden" name="name_kana" value="{{ $validated['name_kana'] }}">
         <input type="hidden" name="postal_code" value="{{ $validated['postal_code'] ?? '' }}">
@@ -86,7 +81,7 @@
             <div class="form-item"></div>
             <div class="form-item form-actions">
                 <button type="submit" class="btn btn-back" value="back" name="back"><i class="fas fa-arrow-left"></i> 修正する</button>
-                <button type="submit" class="btn btn-info" title="登録する">{{ isset($customer) && $customer->id ? '編集する' : '登録する' }}</button>
+                <button type="submit" class="btn btn-info" title="保存する">保存する</button>
             </div>
         </div>
     </form>

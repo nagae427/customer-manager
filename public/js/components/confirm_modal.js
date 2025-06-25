@@ -6,17 +6,14 @@ document.addEventListener('DOMContentLoaded', function () {
     const closeModalButtons = document.querySelectorAll('.js-close-modal');  //閉じるボタン
 
     //モーダルを開く関数
-    function openModal(customerId, customerName) {
+    function openModal(customerName, deleteUrl) {
         //モーダル内の顧客名を更新
         modalCustomerName.textContent = customerName;
 
         //actionを更新
-        deleteForm.action = `/customers/${customerId}`;
+        deleteForm.action = deleteUrl;
 
         deleteConfirmationModal.style.display = 'flex';
-
-        // ESCキーでの閉じを有効にする
-        document.addEventListener('keydown', handleEscapeKey);
     }
 
     //モーダルを閉じる関数
@@ -29,9 +26,11 @@ document.addEventListener('DOMContentLoaded', function () {
     //クリックされたら開く関数にデータ渡す
     openModalButtons.forEach(button => {
         button.addEventListener('click', function () {
-            const customerId = this.getAttribute('data-customer-id');
             const customerName = this.getAttribute('data-customer-name');
-            openModal(customerId, customerName);
+            const deleteUrl = this.getAttribute('data-delete-url');
+                        // ⭐ 追加: ここで deleteUrl の値を確認 ⭐
+            console.log('Delete URL from data attribute:', deleteUrl);
+            openModal(customerName, deleteUrl);
         });
     });
 

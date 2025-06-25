@@ -20,19 +20,23 @@ Route::get('/', function () {
 //ログイン関係
 Route::get('/login', [LoginController::class, 'showLoginForm'])->middleware('guest')->name('login');
 Route::post('login', [LoginController::class, 'login'])->middleware('guest')->name('login_post');
-Route::post('logout', [LogoutController::class, 'logout'])->name('logout');
 
 Route::middleware(['auth'])->group(function () {
     // ダッシュボード
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
 
+    // ログアウト
+    Route::post('logout', [LogoutController::class, 'logout'])->name('logout');
+    
     // 顧客管理
-    Route::get('/customers', [CustomerController::class, 'index'])->name('customers.index');
-    Route::get('/customers/form/{customer?}', [CustomerController::class, 'createOrEdit'])->name('customers.form'); //登録、編集画面
-    Route::post('/customers/confirm/{customer?}', [CustomerController::class, 'storeOrUpdateConfirm'])->name('customers.save_confirm'); //登録、編集確認
-    Route::get('/customers/{customer}', [CustomerController::class, 'show'])->name('customers.show');
-    Route::post('/customers/{customer?}', [CustomerController::class, 'storeOrUpdate'])->name('customers.save'); //登録、編集
-    Route::delete('/customers/{customer}', [CustomerController::class, 'destroy'])->name('customers.destroy');
+    Route::prefix('customers')->group((function () {
+        Route::get('/', [CustomerController::class, 'index'])->name('customers.index');
+        Route::get('/show/{customer}', [CustomerController::class, 'show'])->name('customers.show');
+        Route::get('/edit/{customer?}', [CustomerController::class, 'edit'])->name('customers.edit');
+        Route::post('/confirm', [CustomerController::class, 'confirm'])->name('customers.confirm');
+        Route::post('/store', [CustomerController::class, 'store'])->name('customers.store');
+        Route::delete('/destroy/{customer}', [CustomerController::class, 'destroy'])->name('customers.destroy');
+    }));
 
     // ユーザー（営業担当者）管理
     Route::get('/users', [UserController::class, 'index'])->name('users.index');

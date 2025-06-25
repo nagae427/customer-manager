@@ -17,16 +17,16 @@
 @section('header_actions')
 <div>
     @if(Auth::check() && Auth::user()->isAdmin())
-    <a href="{{ route('customers.form', ['customer' => $customer->id]) }}" title="顧客情報編集" class="btn btn-info"><i class="fas fa-edit"></i>編集</a>
+    <a href="{{ route('customers.edit', $customer) }}" title="顧客情報編集" class="btn btn-info"><i class="fas fa-edit"></i>編集</a>
     @endif
 </div>
 <div>
     @if(Auth::check() && Auth::user()->isAdmin())
-    <button type="button"  
-    class="btn btn-danger btn-sm js-open-modal"
+    <button type="button"
+    class="btn btn-danger js-open-modal"
     data-modal-target="#deleteConfirmationModal" {{--ターゲットとなるモーダルのID。一番外側のdiv--}}
-    data-customer-id="{{ $customer->id }}" 
-    data-customer-name="{{ $customer->name }}">
+    data-customer-name="{{ $customer->name }}"
+    data-delete-url="{{ route('customers.destroy', $customer->id) }}">
         <i class="fas fa-trash-alt"></i>削除
     </button>
     @endif

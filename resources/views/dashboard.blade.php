@@ -23,14 +23,14 @@
         </div>
     </div>
         @foreach($recentCustomers as $customer)
-        <div class="customer js-clickable-row" data-href="{{route('customers.show', ['customer' => $customer->id]) }}">
+        <div class="customer js-clickable-row" data-href="{{route('customers.show', $customer) }}">
             <div class="customer-title">
                 <span class="customer-name">{{ $customer->name }}</span> <br> <span class="thin">{{ $customer->contact_person_name }}</span>
             </div>
             <div class="actions js-no-link">
-                <a href="{{ route('customers.show', ['customer' => $customer->id]) }}" title="顧客情報詳細"><i class="fas fa-eye"></i></a>
+                <a href="{{ route('customers.show', $customer) }}" title="顧客情報詳細"><i class="fas fa-eye"></i></a>
                 @if(Auth::check() && Auth::user()->isAdmin())
-                <a href="{{ route('customers.form', ['customer' => $customer->id]) }}" title="顧客情報編集"><i class="fas fa-edit"></i></a>
+                <a href="{{ route('customers.edit', $customer) }}" title="顧客情報編集"><i class="fas fa-edit"></i></a>
                 @endif
                 @if(Auth::check() && Auth::user()->isAdmin())
                 <button type="button"  

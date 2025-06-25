@@ -1,34 +1,24 @@
 @extends('layouts.app')
 
-@section('title') 
-    @if(isset($customer) && $customer->id)
-        顧客情報編集
-    @else
-        顧客情報登録
-    @endif
-@endsection
+@section('title', '顧客情報編集')
 
 @section('styles')
     <link rel="stylesheet" href="{{ asset('css/customers/create.css') }}">
 @endsection
 
 @section('header-title')
-<a href="{{ route(('customers.index')) }}" title="戻る">
+<a href="{{ url()->previous() }}" title="戻る">
     <i class="fas fa-arrow-left"></i>
 </a>
-<span>
-    @if (isset($customer) && $customer->id)
-        顧客情報編集
-    @else
-        顧客情報登録
-    @endif
-</span>
+<span>顧客情報編集</span>
 @endsection
 
 @section('content')
 <div class="card create-edit-container">
-    <form action="{{ route('customers.save_confirm', ['customer' => $customer->id ?? null]) }}" method="POST" class="h-adr">
+    <form action="{{ route('customers.confirm') }}" method="POST">
         @csrf
+        <input type="hidden" name="id" value="{{ $customer->id ?? '' }}">
+
         <div class="form-items">
             <div class="form-item">
                 <label for="name">顧客名<span>*</span></label><br>
@@ -102,15 +92,10 @@
         <div class="form-items">
             <div class="form-item"></div>
             <div class="form-item form-actions">
-                <a href="{{ $url }}" class="btn btn-back" title="キャンセル" onclick="session()->forget('url')">キャンセル</a>
+                <a href="{{ url()->previous() }}" class="btn btn-back" title="キャンセル">キャンセル</a>
                 <button type="submit" class="btn btn-info" title="確認画面へ">確認画面へ</button>
             </div>
         </div>
     </form>
 </div>
 @endsection
-
-{{-- @section('scripts')
-<script src="https://yubinbango.github.io/yubinbango/yubinbango.js" charset="UTF-8"></script>
-<script src="{{ asset('js/pages/create.js') }}"></script>
-@endsection --}}

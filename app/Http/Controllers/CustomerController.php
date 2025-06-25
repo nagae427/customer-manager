@@ -25,39 +25,28 @@ class CustomerController extends Controller
      */
     public function show(Customer $customer)
     {
-        $previousUrl = url()->previous(); 
-        //$customerからareaとuserをロードする
         $customer->load(['area', 'user']);
-        //詳細ページに必要なデータをビューに渡す
-        return view('customers.show', compact('customer', 'previousUrl'));
+        return view('customers.show', compact('customer'));
     }
 
     /**
      * 顧客登録、編集画面表示
      */
-    public function createOrEdit(Customer $customer)
+    public function edit(Customer $customer)
     {
-        if (url()->previous() === route('customers.index')) {
-            session()->put('url', route('customers.index'));
-        } elseif(url()->previous() === route('customers.show', ['customer' => $customer->id])) {
-            session()->put('url', route('customers.show', ['customer' => $customer->id]));
-        }
-
-        //これでいいのか
-        $url = session()->get('url');
-
         $areas = Area::all();
         $users = User::all();
-        return view('customers.create_or_edit', compact('areas', 'users', 'customer', 'url'));
+        return view('customers.edit', compact('areas', 'users', 'customer'));
     }
 
     /**
      * 顧客登録、編集確認画面
      */
-    public function storeOrUpdateConfirm(Request $request, Customer $customer)
+    public function confirm(Request $request)
     {
         //バリデーション確認
         $validated = $request->validate([
+            'id' => '',
             'name' => 'required|string|max:50',
             'name_kana' => 'required|string|max:100',
             'postal_code' => 'nullable|string|max:8|regex:/^\d{3}-?\d{4}$/',
@@ -82,23 +71,23 @@ class CustomerController extends Controller
         if (!empty($validated['user_id'])) {
             $selectedUser = User::find($validated['user_id']);
         }
-
-        //確認画面を表示
-        return view('customers.save_confirm', compact('customer', 'validated', 'selectedArea', 'selectedUser'));
+        return view('customers.confirm', compact('validated', 'selectedArea', 'selectedUser'));
     }
 
     /**
      * 登録、編集
      */
-    public function storeOrUpdate(Request $request, Customer $customer)
+    public function store(Request $request)
     {
+        // 戻るボタンをクリックされた場合
         if($request->input('back') == 'back'){
-            return redirect()->route('customers.form', ['customer' => $customer->id ?? null])
-                        ->withInput();
+            return redirect()->route('customers.edit', $request->input('id'))
+                 ->withInput();
         }
 
         //hiddenで送られてきた値をバリデーションチェック
         $validated = $request->validate([
+            'id' => '',
             'name' => 'required|string|max:50',
             'name_kana' => 'required|string|max:100',
             'postal_code' => 'nullable|string|max:8|regex:/^\d{3}-?\d{4}$/',
@@ -110,30 +99,24 @@ class CustomerController extends Controller
             'user_id' => 'required|exists:users,id',
         ]);
 
-        //新規登録の場合は$customerはnull、編集の場合は$customerは存在
-        $isUpdate = !is_null($customer);
         //セッションからとってくる
         $customer_data = $request->session()->get('customer_data');
 
         //セッション情報とバリデーション後の値を比較する
         if (!$customer_data || $customer_data !== $validated) {
             //セッションになかったら登録画面か編集画面に表示
-            return redirect()->route('customers.form', ['customer' => $customer->id ?? null])->with('error', '登録情報が見つからず、登録できませんでした。再度入力してください');
+            return redirect()->route('customers.edit', $validated['id'])->with('error', '登録情報が見つからず、登録できませんでした。再度入力してください');
         }
 
         //保存する
         try {
-            if ($isUpdate) {
-                $customer->update($validated);
-                $message = "{$validated['name']} さんの情報を更新しました。";
-            } else {
-                Customer::create($validated);
-                $message = "{$validated['name']} さんを登録しました。";
-            }
+            $customer = Customer::findOrFail($validated['id']);
+            $customer->update($validated);
+            $message = "{$validated['name']} さんの情報を更新しました。";
 
             //成功したらセッションを削除してメッセージ
             $request->session()->forget('customer_data');
-            return redirect()->route('customers.index', ['customer' => $customer->id ?? null])->with('success', $message);
+            return redirect()->route('customers.index', $customer)->with('success', $message);
         } catch (Exception $e) {
             Log::error("エラーが発生しました: {$e->getMessage()}");
             return redirect()->route('customers.form')->with('error', '顧客情報の登録中にエラーが発生しました。もう一度お試しください');
