@@ -7,7 +7,7 @@
             <button type="button" class="modal-close js-close-modal" aria-label="閉じる">×</button>
         </div>
         <div class="modal-body">
-            <p><span id="modalUserName"></span> を削除しますか？</p> {{--ここに営業担当者名を表示--}}
+            <p><span id="modalUserName"></span> を削除しますか？</p> 
             <p>この操作は元に戻せません</p>
         </div>
         <div class="modal-footer">

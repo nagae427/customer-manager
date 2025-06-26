@@ -1,0 +1,30 @@
+.login-container {
+    width: 25vw;
+    margin: 0 auto;
+    padding: 2rem;
+    text-align: center;
+}
+
+.login-container h2 {
+    font-size: 2rem;
+}
+
+.user-id,
+.password {
+    margin: 0 auto 1rem auto;
+}
+
+label {
+    margin-bottom: 0.3rem;
+}
+
+label, input select {
+    display: block;
+    width: 100%;
+    text-align: start;
+}
+
+input, select {
+    height: 2rem;
+    width: 100%;
+}

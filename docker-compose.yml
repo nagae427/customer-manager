@@ -9,6 +9,7 @@ services:
             dockerfile: ./docker/php/Dockerfile
         ports:
             - 9003:9003
+            - 5173:5173
         volumes:
             - .:/var/www/html
             - vendor-store:/var/www/html/vendor

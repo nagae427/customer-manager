@@ -1,0 +1,148 @@
+.show-container {
+    display: flex;
+    max-width: 1500px;
+    padding: 1rem;
+    gap: 1rem;
+}
+
+.left {
+    flex: 5;
+}
+
+.user-information {
+    margin: 0.5rem 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #cccccc;
+}
+
+.left p {
+    padding: 0;
+    margin: 0;
+}
+
+.user-name p {
+    font-size: 2rem;
+}
+
+.user-customer-container h2 {
+    margin: 0.2rem 1rem;
+    font-weight: normal;
+}
+
+.user-customer-content {
+    display: flex;
+    margin: 1rem 1.5rem;
+    justify-content: space-between; 
+    padding: 0.2rem 1rem;
+    border: 1px solid #cccccc;
+    border-radius: 0.5rem;
+}
+
+.user-customer-container p {
+    margin: 1rem 1.5rem;
+    padding: 0.2rem 1rem;
+}
+
+.name h2,
+.name p {
+    margin: 0;
+}
+
+.js-clickable-row {
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.js-clickable-row:hover {
+    background: #f1f5f7;
+}
+
+.kana p {
+    color: rgb(134, 134, 134);
+}
+
+.information {
+    display: flex;
+}
+
+.basic-information {
+    flex: 1;
+    margin: 1rem;
+}
+
+.basic-information p {
+    margin-bottom: 0.3rem;
+}
+
+.contact-information p {
+    margin-bottom: 0.3rem;
+}
+
+.contact-information {
+    flex: 1;
+    margin: 1rem;
+}
+
+.right {
+    flex: 3;
+}
+
+.heading p {
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.authority,
+.card.down {
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.sales .heading p,
+.update .heading p {
+    margin-bottom: 0.5rem; 
+}
+
+.sales p,
+.update p {
+    margin: 0; 
+    line-height: 1.5; 
+}
+
+.actions .fa-eye {
+    color: #007bff;
+    font-size: 1.3em;
+}
+
+.actions .fa-edit {
+    color: #333;
+    font-size: 1.3em;
+}
+
+.actions a:hover i {
+    opacity: 0.6;
+}
+
+.actions a:hover .fa-eye {
+    color: #0056b3;
+}
+
+.actions a:hover .fa-edit {
+    color: #000;
+}
+
+.actions a,
+.actions form {
+    display: inline-block;
+    /*インラインにしかvertical-alignは指定できない*/
+    margin: 0 0.4rem;
+    padding: 0;
+    line-height: 1;
+    vertical-align: middle;
+}
+
+.actions {
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+}

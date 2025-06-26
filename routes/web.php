@@ -39,10 +39,11 @@ Route::middleware(['auth'])->group(function () {
     }));
 
     // ユーザー（営業担当者）管理
-    Route::get('/users', [UserController::class, 'index'])->name('users.index');
-    Route::get('/users/{user}', [UserController::class, 'show'])->name('users.show');
-    Route::get('/users/form/{user?}', [UserController::class, 'createOrEdit'])->name('users.form'); //登録、編集画面
-    Route::post('/users/confirm/{user?}', [UserController::class, 'storeOrUpdateConfirm'])->name('users.save_confirm'); //登録、編集確認
-    Route::post('/users/{user?}', [UserController::class, 'storeOrUpdate'])->name('users.save'); //登録、編集
-    Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
+    Route::prefix('users')->group((function () {
+        Route::get('/', [UserController::class, 'index'])->name('users.index');
+        Route::get('/show/{user}', [UserController::class, 'show'])->name('users.show');
+        Route::get('/edit/{user?}', [UserController::class, 'edit'])->name('users.edit'); 
+        Route::post('/store', [UserController::class, 'store'])->name('users.store');
+        Route::delete('/destroy/{user}', [UserController::class, 'destroy'])->name('users.destroy');
+    }));
 });

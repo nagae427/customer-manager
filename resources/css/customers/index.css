@@ -1,0 +1,123 @@
+.customer-list {
+    width: 100%;
+    max-height: 60vh;
+    position: relative; /* theadのposition: sticky; の基準点にするため */
+    overflow-y: auto;
+}
+
+.customer-list table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: #fdfdfd;
+}
+
+thead {
+    background-color: #cacaca;
+    position: sticky; 
+    top: 0;           
+    z-index: 10;      
+    box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.2); 
+}
+
+.thin {
+    color: #808080;
+}
+
+.js-clickable-row {
+    cursor: pointer;
+}
+
+tbody tr {
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+tbody tr:hover {
+    background: #f1f5f7;
+}
+
+.customer-list th {
+    background-color: #cacaca; /* theadの背景色をthにも適用 */
+    color: #333;
+    font-weight: normal;
+    border-bottom: 1px solid #e0e0e0;
+    padding: 1rem; /* 既存のパディング */
+    text-align: center; /* 既存のテキスト位置 */
+}
+
+tbody tr {
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+tbody tr:hover {
+    background: #f1f5f7;
+}
+
+.customer-list td {
+    padding: 1rem;
+    text-align: center;
+    color: #333;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.customer-name {
+    font-weight: bold;
+}
+
+.actions {
+    white-space: nowrap;
+}
+
+.actions a,
+.actions form {
+    display: inline-block;
+    /*インラインにしかvertical-alignは指定できない*/
+    margin: 0 0.4rem;
+    padding: 0;
+    line-height: 1;
+    vertical-align: middle;
+}
+
+.actions button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    margin: 0 0.4rem;
+    vertical-align: middle;
+    /* ボタン内のアイコンの垂直方向のズレを調整 */
+    line-height: 1;
+    /* アイコンとテキストの垂直方向のズレを調整 */
+}
+
+.actions .fa-eye {
+    color: #007bff;
+    font-size: 1.3em;
+}
+
+.actions .fa-edit {
+    color: #333;
+    font-size: 1.3em;
+}
+
+.actions .fa-trash-alt {
+    color: #dc3545;
+    font-size: 1.3em;
+}
+
+.actions a:hover i,
+.actions button:hover i {
+    opacity: 0.6;
+}
+
+.actions a:hover .fa-eye {
+    color: #0056b3;
+}
+
+.actions a:hover .fa-edit {
+    color: #000;
+}
+
+.actions button:hover .fa-trash-alt {
+    color: #c82333;
+}
