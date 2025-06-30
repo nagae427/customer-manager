@@ -47,7 +47,7 @@ class userController extends Controller
             'id' => 'nullable|integer',
             'name' => 'required|string|max:50',
             'name_kana' => 'required|string|max:100',
-            'email' => 'required|email|max:255',Rule::unique('users')->ignore($request->id),
+            'email' => 'required|email|max:255',Rule::unique('users')->ignore($request->id), //自分自身の更新はユニーク無視
             'phone' => 'required|string|max:20',
             'is_admin' => 'required|in:admin,sales',
         ]);
@@ -65,7 +65,7 @@ class userController extends Controller
                 $user->update($validated);
                 $message = "{$validated['name']} さんの情報を更新しました。";
             }
-            return redirect()->route('users.index', $user)->with('success', $message);
+            return redirect()->route('users.index')->with('success', $message);
         } catch (Exception $e) {
             Log::error("保存エラーが発生しました: {$e->getMessage()}");
             return redirect()->route('users.index')->with('error', '情報の編集中にエラーが発生しました。もう一度お試しください');
@@ -75,7 +75,7 @@ class userController extends Controller
     /**
      * 営業担当者削除
      */
-    public function destroy(User $user)
+    public function delete(User $user)
     {
         try {
             $userName = $user->name;  

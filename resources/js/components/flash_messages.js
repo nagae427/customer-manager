@@ -1,11 +1,9 @@
-document.addEventListener('DOMContentLoaded', function () {
-    const messages = document.querySelectorAll('.message-container .message');
+import $ from 'jquery';
 
-    if (messages.length > 0) {
-        messages.forEach(message => {
-            setTimeout(() => {
-                message.remove();
-            }, 5000);
-        });
-    }
+$(function() {
+    const $message = $('.message');
+
+    setTimeout(() => {
+        $message.remove();
+    }, 5000);
 });

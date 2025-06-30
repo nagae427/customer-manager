@@ -48,7 +48,7 @@ class LoginController extends Controller
         if (Auth::attempt(['id' => $credentials['user_id'], 'password' => $credentials['password']])) {
             RateLimiter::clear($throttleKey);  //成功した試行回数をリセット
             $request->session()->regenerate();  //セッションIDを新しいものにする(セッション固定攻撃対策)
-            return redirect()->intended('dashboard');
+            return redirect()->intended('users');
         }
 
         /*認証失敗

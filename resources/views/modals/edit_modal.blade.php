@@ -11,19 +11,31 @@
             
             <div class="mb-4">
                 <label for="editName" class="block text-gray-700 text-sm font-bold mb-2">営業担当者名<span class="text-red-500">*</span>:</label>
-                <input type="text" id="editName" name="name" autocomplete="name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" maxlength="50" required>
+                <input type="text" id="editName" name="name" autocomplete="name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" maxlength="50">
+                @error('name')
+                    <div class="text-red-700">{{ $message }}</div>
+                @enderror
             </div>
             <div class="mb-4">
                 <label for="editNameKana" class="block text-gray-700 text-sm font-bold mb-2">営業担当者名(かな)<span class="text-red-500">*</span>:</label>
-                <input type="text" id="editNameKana" name="name_kana" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" maxlength="100" required>
+                <input type="text" id="editNameKana" name="name_kana" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" maxlength="100">
+                @error('name_kana')
+                    <div class="text-red-700">{{ $message }}</div>
+                @enderror
             </div>
             <div class="mb-4">
                 <label for="editPhone" class="block text-gray-700 text-sm font-bold mb-2">電話番号<span class="text-red-500">*</span>:</label>
                 <input type="text" id="editPhone" name="phone" autocomplete="tel" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                @error('phone')
+                    <div class="text-red-700">{{ $message }}</div>
+                @enderror
             </div>
             <div class="mb-4">
                 <label for="editEmail" class="block text-gray-700 text-sm font-bold mb-2">メールアドレス<span class="text-red-500">*</span>:</label>
-                <input type="email" id="editEmail" name="email" autocomplete="email" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                <input type="email" id="editEmail" name="email" autocomplete="email" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                @error('email')
+                    <div class="text-red-700">{{ $message }}</div>
+                @enderror
             </div>
 
             <div class="mb-4">
@@ -32,6 +44,9 @@
                     <option value="sales">営業担当者</option>
                     <option value="admin">管理者</option>
                 </select>
+                @error('is_admin')
+                    <div class="text-red-700">{{ $message }}</div>
+                @enderror
             </div>
 
             <div class="flex justify-end pt-4">

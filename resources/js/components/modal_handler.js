@@ -45,13 +45,12 @@ $(function() {
 
         if(userData) {
             $('#editModalTitle').text('営業担当者情報編集');
-            $('#editForm').attr('action', '/users/store');
             $('#editUserId').val(userData.id);
             $('#editName').val(userData.name);
             $('#editNameKana').val(userData.name_kana);
             $('#editPhone').val(userData.phone);
             $('#editEmail').val(userData.email);
-            $('#editIsAdmin').val(userData.is_admin ? 'admin' : 'sales');
+            $('#editIsAdmin').val(userData.is_admin == 'admin' ? 'admin' : 'sales');
             $('#editSubmitButton').text('更新');
             openModal('editModal');
         }
@@ -66,7 +65,7 @@ $(function() {
                 $('#showName').text(userData.name);
                 $('#showNameKana').text(userData.name_kana);
                 $('#showPhone').text(userData.phone);
-                $('#showEmail').text(userData.phone);
+                $('#showEmail').text(userData.email);
                 $('#showCustomersCount').text(userData.customers_count || '0');
 
                 openModal('showModal');
@@ -74,15 +73,59 @@ $(function() {
         }
     });
 
+    //削除モーダルを開く
+    $('.open-delete-modal').on('click', function(event) {
+        event.stopPropagation();
+        const deleteUrl = $(this).data('delete-url');
+        console.log(deleteUrl);
+        const userName = $(this).data('user-name');
+        
+        if(deleteUrl) {
+            $('#deleteForm').attr('action', deleteUrl);
+            $('#deleteName').text(userName);
+            openModal('deleteModal');
+        }
+    })
+
+    //モーダル外をクリックしても閉じる(詳細モーダルのみ)
     $('.close-modal').on('click', function() {
         const modalId = $(this).data('modal-id');
         closeModal(modalId);
     });
 
+    //モーダルを閉じる
     $('[data-modal-id]').on('click', function(event) {
         if ($(event.target).is(this)) {
             const modalId = $(this).data('modal-id');
             closeModal(modalId);
         }
+    });
+
+    function activeTab(tabId, color) {
+        const $tab = $('#' + tabId);
+        const $active = $('.active');
+        $active.removeClass('active scale-110');
+        $tab.addClass('active');
+
+        setTimeout(() => {
+            $active.addClass('opacity-50');
+            $tab.removeClass('opacity-50 hover:bg-' + color +'-500').addClass('scale-110');
+        }, 100);
+    }
+
+    //初めはsalesを表示
+    $('.user-row[data-user-role="admin"]').hide();
+
+    //タブで切り替え
+    $('#salesBtn').on('click', function() {
+        $('.user-row[data-user-role="admin"]').hide();
+        $('.user-row[data-user-role="sales"]').show();
+        activeTab('salesBtn', 'green');
+    });
+
+    $('#adminBtn').on('click', function() {
+        $('.user-row[data-user-role="admin"]').show();
+        $('.user-row[data-user-role="sales"]').hide();
+        activeTab('adminBtn', 'red');
     });
 });

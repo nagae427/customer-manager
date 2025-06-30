@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 //初めの '/' へのアクセス
 Route::get('/', function () {
     if (Auth::check()) {
-        return redirect()->route('dashboard');
+        return redirect()->route('users.index');
     }
 
     return redirect()->route('login');
@@ -41,9 +41,7 @@ Route::middleware(['auth'])->group(function () {
     // ユーザー（営業担当者）管理
     Route::prefix('users')->group((function () {
         Route::get('/', [UserController::class, 'index'])->name('users.index');
-        // Route::get('/show/{user}', [UserController::class, 'show'])->name('users.show');
-        // Route::get('/edit/{user?}', [UserController::class, 'edit'])->name('users.edit'); 
         Route::post('/store', [UserController::class, 'store'])->name('users.store');
-        Route::delete('/destroy/{user}', [UserController::class, 'destroy'])->name('users.destroy');
+        Route::delete('/delete/{user}', [UserController::class, 'delete'])->name('users.delete');
     }));
 });
