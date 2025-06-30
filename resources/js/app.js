@@ -4,10 +4,8 @@ import './bootstrap';
 import $ from 'jquery';
 window.jQuery = window.$ = $; // グローバルスコープにjQueryと$を公開
 
-//お試し
-$(function() { 
-    console.log("jQuery is successfully loaded!");
-    $('body').on('click', function() {
-        console.log('Body was clicked!');
-    });
-});
+import './components/click_row';
+import './components/destroy_modal';
+import './components/flash_messages'; 
+import './components/modal_handler';
+import './components/user_confirm_modal'; 

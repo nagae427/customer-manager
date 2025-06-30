@@ -11,7 +11,7 @@
 </head>
 <body>
     <!-- ヘッダー上部分-->
-    <div class="hidden md:flex justify-between items-center space-x- bg-gray-100 shadow-md">
+    <div class="hidden md:flex justify-between items-center space-x-2 bg-gray-100 shadow-md">
         <div class="flex justify-start space-x-6 p-5 text-gray-900">
             <a href="{{ route('dashboard') }}" class="items-center text-2xl font-bold" title="ダッシュボードへ"><i class="fa-solid fa-clipboard"></i>顧客管理システム</a>
             @if (Auth::check())
@@ -55,23 +55,9 @@
             </div>
         </div>
     </div>
-
-    <div class="flex justify-between items-center space-x- bg-gray-100 shadow-md md:hidden">
-        <div></div>
-        <div class="flex justify-start space-x-6 p-5 text-gray-900">
-            <a href="{{ route('dashboard') }}" class="items-center text-2xl font-bold" title="ダッシュボードへ"><i class="fa-solid fa-clipboard"></i>顧客管理システム</a>
-        </div>
-        <!-- ハンバーガーメニュー -->
-        <button id="hamburger-menu" class="text-gray-900 focus:outline-none">
-            <i class="fas fa-bars text-2xl"></i>
-        </button>             
-        <div class="flex items-center space-x-5 mr-5">
-
-        </div>
-    </div>
     
     {{-- ヘッダー下部分 --}}
-    <div class="text-center bg-gray-200 p-5">
+    <div>
         @if (session('success'))
         <div class="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400" role="alert">
             <span class="font-medium">{{ session('success')}}</span>
@@ -88,8 +74,5 @@
     <main>
         @yield('content')
     </main>
-
-    {{-- jsを読み込むのに必要 --}}
-    @stack('scripts')
 </body>
 </html>

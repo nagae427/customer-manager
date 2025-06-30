@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Exception;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Log;
 
 class userController extends Controller
@@ -41,19 +43,20 @@ class userController extends Controller
     public function store(Request $request)
     {
         //バリデーションチェック
-        $validated = [
-            'id' => 'nullable|integer|exists:users,id',
+        $validated = $request->validate([
+            'id' => 'nullable|integer',
             'name' => 'required|string|max:50',
             'name_kana' => 'required|string|max:100',
-            'email' => 'required|email|max:255|unique:users,email',
-            'phone' => 'required|string|max:20|',
+            'email' => 'required|email|max:255',Rule::unique('users')->ignore($request->id),
+            'phone' => 'required|string|max:20',
             'is_admin' => 'required|in:admin,sales',
-        ];
+        ]);
+
+        $validated['password'] = Hash::make('password');
 
         //保存する
         try {
             if (empty($validated['id'])) {
-                //新規登録
                 $user = User::create($validated);
                 $message = "{$validated['name']} さんの情報を登録しました。";
             } else {
@@ -65,7 +68,7 @@ class userController extends Controller
             return redirect()->route('users.index', $user)->with('success', $message);
         } catch (Exception $e) {
             Log::error("保存エラーが発生しました: {$e->getMessage()}");
-            return redirect()->route('users.create')->with('error', '情報の編集中にエラーが発生しました。もう一度お試しください');
+            return redirect()->route('users.index')->with('error', '情報の編集中にエラーが発生しました。もう一度お試しください');
         }
     }
 

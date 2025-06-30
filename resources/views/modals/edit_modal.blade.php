@@ -1,56 +1,43 @@
-@extends('layouts.app')
-
-@section('title', '営業担当者情報登録') 
-
-@section('styles')
-    <link rel="stylesheet" href="{{ asset('css/users/create.css') }}">
-@endsection
-
-@section('header-title')
-<a href="{{ $previousUrl }}" title="戻る">
-    <i class="fas fa-arrow-left"></i>
-</a>
-<span>営業担当者情報編集</span>
-@endsection
-
-@section('content')
-<div class="card create-edit-container">
-    <form action="{{ route('users.update_confirm', $user) }}" method="POST">
-        @csrf
-        <div class="form-items">
-            <div class="form-item">
-                <label for="user_name">営業担当者名<span>*</span></label><br>
-                <input type="text" id="user_name" name="user_name" maxlength="50" required placeholder="例: 株式会社ABC" value="{{ old('user_name', $user->user_name) }}">
-            </div>
-            <div class="form-item">
-                <label for="user_name_kana">営業担当者名(かな)<span>*</span></label><br>
-                <input type="text" id="user_name_kana" name="user_name_kana" maxlength="100" required placeholder="例: かぶしきがいしゃえーびーしー" value="{{ old('user_name_kana', $user->user_name_kana) }}">
-            </div>
+<div id="editModal" class="fixed inset-0 bg-gray-600/70 hidden items-center justify-center z-50 transition-opacity duration-300 ease-in-out">
+    <div class="relative m-auto bg-white rounded-lg shadow-xl p-6 w-11/12 md:w-1/2 lg:w-1/3 max-w-lg transition-transform duration-300 ease-out transform scale-95 opacity-0">
+        <div class="flex justify-between text-center border-b pb-3 mb-4">
+            <h3 class="text-xl font-semibold" id="editModalTitle"></h3>
+            <button class="text-gray-500 hover:text-gray-700 text-2xl focus:outline-none close-modal" data-modal-id="editModal">&times;</button>
         </div>
+        <form id="editForm" method="post" action="{{ route('users.store') }}">
+            @csrf
+            <input type="hidden" id="editUserId" name="id">
+            <input type="hidden" name="password"> 
+            
+            <div class="mb-4">
+                <label for="editName" class="block text-gray-700 text-sm font-bold mb-2">営業担当者名<span class="text-red-500">*</span>:</label>
+                <input type="text" id="editName" name="name" autocomplete="name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" maxlength="50" required>
+            </div>
+            <div class="mb-4">
+                <label for="editNameKana" class="block text-gray-700 text-sm font-bold mb-2">営業担当者名(かな)<span class="text-red-500">*</span>:</label>
+                <input type="text" id="editNameKana" name="name_kana" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" maxlength="100" required>
+            </div>
+            <div class="mb-4">
+                <label for="editPhone" class="block text-gray-700 text-sm font-bold mb-2">電話番号<span class="text-red-500">*</span>:</label>
+                <input type="text" id="editPhone" name="phone" autocomplete="tel" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+            </div>
+            <div class="mb-4">
+                <label for="editEmail" class="block text-gray-700 text-sm font-bold mb-2">メールアドレス<span class="text-red-500">*</span>:</label>
+                <input type="email" id="editEmail" name="email" autocomplete="email" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+            </div>
 
-        @if(Auth::user()->id !== $user->id)
-        <div class="form-items"> 
-            <div class="form-item authority"> 
-                <label for="authority">権限<span>*</span></label><br>
-                <select id="authority" name="authority" required>
-                    <option value="">選択してください</option>
-                    <option value="admin" {{ old('authority', $user->authority) == 'admin' ? 'selected' : '' }}>管理者</option>
-                    <option value="sales" {{ old('authority', $user->authority) == 'sales' ? 'selected' : '' }}>営業担当者</option>
+            <div class="mb-4">
+                <label for="editIsAdmin" class="block text-gray-700 text-sm font-bold mb-2">権限<span class="text-red-500">*</span>:</label>
+                <select name="is_admin" id="editIsAdmin" class="shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                    <option value="sales">営業担当者</option>
+                    <option value="admin">管理者</option>
                 </select>
-                @error('authority') <div class="text-danger">{{ $message }}</div> @enderror
             </div>
-            <div class="form-item"></div>
-        </div>
-        @endif
 
-
-        <div class="form-items">
-            <div class="form-item"></div>
-            <div class="form-item form-actions">
-                <a href="{{ $previousUrl }}" class="btn btn-back" title="キャンセル">キャンセル</a>
-                <button type="submit" class="btn btn-info" title="確認画面へ">確認画面へ</button>
+            <div class="flex justify-end pt-4">
+                <button type="button" class="bg-gray-300 hover:bg-gray-400 text-black font-bold py-2 px-4 rounded mr-2 close-modal" data-modal-id="editModal">キャンセル</button>
+                <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" id="editSubmitButton">登録</button>
             </div>
-        </div>
-    </form>
+        </form>
+    </div>
 </div>
-@endsection
