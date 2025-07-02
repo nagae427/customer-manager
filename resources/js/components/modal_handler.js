@@ -23,79 +23,105 @@ $(function() {
         }, 200);
     }
 
-    // 新規登録モーダルを開く
-    $('#openEditModal').on('click', function() {
-        $('#editModalTitle').text('新規営業担当者登録');
-        $('#editForm').find('input[name="_method"]').remove();
-        $('#editUserId').val('');
-        $('#editName').val('');
-        $('#editNameKana').val('');
-        $('#editPhone').val('');
-        $('#editEmail').val('');
-        $('#editSubmitButton').text('登録');
-        openModal('editModal');
+    $.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
     });
 
-    //編集モーダルを開く
-    $('.open-edit-modal').on('click', function(event) {
-        event.stopPropagation(); //行のボタンに対しての伝搬を防ぐ
-        const userId = $(this).data('user-id');
-        const $userRow = $('.user-row[data-user-id="' + userId + '"]');
-        const userData = $userRow.data('user');
+    function noOpenModal(event) {
+        if (!$(event.target).closest('.no-open-modal').length) {
 
-        if(userData) {
-            $('#editModalTitle').text('営業担当者情報編集');
-            $('#editUserId').val(userData.id);
-            $('#editName').val(userData.name);
-            $('#editNameKana').val(userData.name_kana);
-            $('#editPhone').val(userData.phone);
-            $('#editEmail').val(userData.email);
-            $('#editIsAdmin').val(userData.is_admin == 'admin' ? 'admin' : 'sales');
-            $('#editSubmitButton').text('更新');
-            openModal('editModal');
         }
-    });
+    }
 
-    //詳細モーダルを開く
-    $('.user-row , .open-show-modal').on('click', function(event) {
-        if (!$(event.target).closest('.js-no-modal-open').length || $(event.target).closest('.open-show-modal').length) {
-            const userData = $(this).data('user');
-
-            if(userData) {
-                $('#showName').text(userData.name);
-                $('#showNameKana').text(userData.name_kana);
-                $('#showPhone').text(userData.phone);
-                $('#showEmail').text(userData.email);
-                $('#showCustomersCount').text(userData.customers_count || '0');
-
-                openModal('showModal');
-            }
-        }
-    });
-
-    //削除モーダルを開く
-    $('.open-delete-modal').on('click', function(event) {
+    //モーダルを開く
+    $(document).on('click', '.open-modal-btn', function(event) {
+        event.preventDefault();
         event.stopPropagation();
-        const deleteUrl = $(this).data('delete-url');
-        console.log(deleteUrl);
-        const userName = $(this).data('user-name');
-        
-        if(deleteUrl) {
-            $('#deleteForm').attr('action', deleteUrl);
-            $('#deleteName').text(userName);
-            openModal('deleteModal');
-        }
-    })
 
-    //モーダル外をクリックしても閉じる(詳細モーダルのみ)
-    $('.close-modal').on('click', function() {
-        const modalId = $(this).data('modal-id');
-        closeModal(modalId);
+        const url = $(this).data('url');
+        const title = $(this).data('title');
+
+        if (!url) return;
+
+        $('#commonModalBody').html('<p class="text-center py-8">読み込み中...</p>');
+        $('#commonModalTitle').text(title);
+
+        $.ajax({
+            url: url,
+            type: 'GET',
+            dataType: 'html',
+        }).done(function(html) {
+            $('#commonModalBody').html(html);
+            openModal('commonModal');
+        }).fail(function() {
+            $('#commonModalBody').html('<p class="text-center text-red-500 py-8">コンテンツの読み込みに失敗しました。');
+            openModal('commonModal');
+        });
+    });
+
+    //送信
+     $('#commonModalBody').on('submit', '#editModal,#deleteModal', function(event) {
+        //リロードをキャンセルしておく
+        event.preventDefault();
+
+        //エラーメッセージと色をクリア
+        $('.error-message').text('');
+        $(this).find('.border-red-500').removeClass('border-red-500');
+        $('#ajax-message-container').addClass('hidden').find('.ajax-message').text('');
+
+        const formData = $(this).serialize();
+        const url = $(this).attr('action');
+
+        const $closeButton = $('#closeButton');
+        const $cancelButton = $('#cancelButton');
+        const $submitButton = $('#submitButton');
+        //送信ボタンのメッセージを戻す用
+        const originalButtonText = $submitButton.text();
+        $closeButton.prop('hidden', true);
+        $cancelButton.prop('hidden', true);
+        $submitButton.prop('disabled', true).text('処理中...');
+
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: formData,
+            dataType: 'json',
+        }).done(function(response) {
+            if (response.success) {
+                localStorage.setItem('successMessage', response.success);
+            }
+
+            // モーダルを閉じる
+            closeModal('commonModal');
+
+            // ページをリロードする
+            window.location.reload();
+        }).fail(function(jqXHR) {  //エラーハンドリング用のコールバック関数
+            if (jqXHR.status === 422) {
+                const errors = jqXHR.responseJSON.errors;
+                for(const field in errors) {
+                    const errorMessage = errors[field][0];
+
+                    $('#error-' + field).text(errorMessage);
+                    $(this).find('[name="' + field + '"]').addClass('border-red-500');
+                }
+            }
+        }).always(function() {
+            $closeButton.prop('hidden', false);
+            $cancelButton.prop('hidden', false);
+            $submitButton.prop('disabled', false).text(originalButtonText);
+        });
     });
 
     //モーダルを閉じる
-    $('[data-modal-id]').on('click', function(event) {
-        if ($(event.target).is(this)) {
+    $('#commonModal').on('click', '.close-modal', function() {
+        closeModal('commonModal');
+    });
+
+    $('#commonModal').on('click', function(event) {
+        if ($(event.target).is(this) && $('#commonModalBody').find('#showModal').length) {
             const modalId = $(this).data('modal-id');
             closeModal(modalId);
         }
@@ -128,4 +154,5 @@ $(function() {
         $('.user-row[data-user-role="sales"]').hide();
         activeTab('adminBtn', 'red');
     });
+
 });

@@ -41,7 +41,10 @@ Route::middleware(['auth'])->group(function () {
     // ユーザー（営業担当者）管理
     Route::prefix('users')->group((function () {
         Route::get('/', [UserController::class, 'index'])->name('users.index');
+        Route::get('/show/{user}', [UserController::class, 'show'])->name('users.show');
+        Route::get('/edit/{user?}', [UserController::class, 'edit'])->name('users.edit');
         Route::post('/store', [UserController::class, 'store'])->name('users.store');
-        Route::delete('/delete/{user}', [UserController::class, 'delete'])->name('users.delete');
+        Route::get('/confirm/{user}', [UserController::class, 'confirm'])->name('users.confirm');
+        Route::post('/delete/{user}', [UserController::class, 'delete'])->name('users.delete');
     }));
 });

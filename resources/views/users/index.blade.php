@@ -15,7 +15,7 @@
         </div>
         <div>
             @if(Auth::check() && Auth::user()->isAdmin())
-                <button id="openEditModal" data-store-url="{{ route('users.store') }}" class="bg-blue-500 text-white font-bold py-2 px-4 rounded-t hover:bg-blue-600">新規登録</button>
+                <button class="open-modal-btn bg-blue-500 text-white font-bold py-2 px-4 rounded-t hover:bg-blue-600" data-url="{{ route('users.edit') }}" data-title="新規営業担当者登録">新規登録</button>
             @endif
         </div>
     </div>
@@ -32,23 +32,12 @@
             </thead>
             <tbody>
                 @foreach($users as $user)
-                    @php
-                        $userData= json_encode([
-                            "id" => $user->id,
-                            "name" => $user->name,
-                            "name_kana" => $user->name_kana,
-                            "phone" => $user->phone,
-                            "email" => $user->email,
-                            "is_admin" => $user->is_admin,
-                            "customers_count" => $user->customers->count(),
-                            "updated_at" => $user->updated_at->format('Y/m/d H:i'),
-                            // "show_url" => route('users.show', $user),
-                            "store_url" => (Auth::check() && Auth::user()->isAdmin() ? route('users.store', $user) : null)
-                        ]);
-                    @endphp
                     {{-- ここを修正 --}}
-                    <tr class="user-row hover:bg-gray-50 cursor-pointer" data-user="{{ $userData }}" data-user-id="{{ $user->id }}" data-user-role="{{ $user->is_admin }}">
-                        <td class="px-4 py-2 border-b border-gray-200 whitespace-nowrap">
+                    <tr class="user-row open-modal-btn hover:bg-gray-50 cursor-pointer" data-url="{{ route('users.show', $user) }}" data-user-id="{{ $user->id }}" data-user-role="{{ $user->is_admin }}"  data-title="{{ $user->name}} さんの情報">
+                        <td class="px-4 py-2 border-b border-gray-200 whitespace-nowrap 
+                        @if(Auth::user()->id === $user->id) 
+                            text-blue-800"
+                        @endif>
                             <span class="user-name font-medium">{{ $user->name }}</span> <br>
                             <span class="text-xs text-gray-500">{{ $user->name_kana }}</span>
                         </td>
@@ -60,13 +49,15 @@
                         <td class="px-4 py-2 border-b border-gray-200 whitespace-nowrap">
                             <span class="text-xs text-gray-500">{{ $user->updated_at->format('Y/m/d H:i') }}</span>
                         </td>
-                        <td class="actions js-no-modal-open px-4 py-2 border-b border-gray-200 whitespace-nowrap">
-                            <button class="open-show-modal text-blue-600 hover:text-blue-800 mr-2" data-user-id="{{ $user->id }}" title="営業担当者情報詳細"><i class="fas fa-eye"></i></button>
+                        <td class="actions no-open-modal px-4 py-2 border-b border-gray-200 whitespace-nowrap">
+                            <button class="open-modal-btn text-blue-600 hover:text-blue-800 mr-2" data-url="{{ route('users.show', $user) }}" data-user-id="{{ $user->id }}" data-title="{{ $user->name}} さんの情報" title="{{ $user->name}} さんの情報"><i class="fas fa-eye"></i></button>
                             @if(Auth::check() && Auth::user()->isAdmin())
                                 {{-- 編集ボタンをモーダル表示用に変更 --}}
-                                <button class="open-edit-modal text-green-600 hover:text-green-800 mr-2" data-user-id="{{ $user->id }}" title="営業担当者情報編集"><i class="fas fa-edit"></i></button>
+                                <button class="open-modal-btn text-green-600 hover:text-green-800 mr-2" data-url="{{ route('users.edit', $user) }}" data-title="営業担当者情報編集" title="営業担当者情報編集"><i class="fas fa-edit"></i></button>
                                 {{-- 削除ボタンを追加 --}}
-                                <button class="open-delete-modal text-red-600 hover:text-red-800" data-delete-url="{{ route('users.delete', ['user' => $user->id]) }}" data-user-name="{{ $user->name}}" title="営業担当者削除"><i class="fas fa-trash"></i></button>
+                                @if(Auth::user()->id !== $user->id)
+                                <button class="open-modal-btn text-red-600 hover:text-red-800" data-url="{{ route('users.confirm', $user) }}" data-title="{{ $user->name}} さんの情報削除確認" title="情報削除確認"><i class="fas fa-trash"></i></button>
+                                @endif
                             @endif
                         </td>
                     </tr>
@@ -76,9 +67,16 @@
     </div>
 </div>
 
-{{-- モーダルを埋め込む --}}
-@include('modals/edit_modal')
-@include('modals/show_modal')
-@include('modals/delete_modal')
+<div id="commonModal" class="fixed inset-0 bg-gray-600/70 hidden items-center justify-center z-50 transition-opacity duration-300 ease-in-out" data-modal-id="commonModal">
+    <div class="relative m-auto bg-white rounded-lg shadow-xl p-6 w-11/12 md:w-1/2 lg:w-1/3 max-w-lg transition-transform duration-300 ease-out transform scale-95 opacity-0">
+        <div class="flex justify-between text-center border-b pb-3 mb-4">
+            <h3 class="text-xl font-semibold" id="commonModalTitle"></h3>
+            <button id="closeButton" class="text-gray-500 hover:text-gray-700 text-2xl focus:outline-none close-modal" data-modal-id="commonModal">&times;</button>
+        </div>
+        <div id="commonModalBody">
+            {{-- ここにhtml --}}
+        </div>
+    </div>
+</div>
 
 @endsection
