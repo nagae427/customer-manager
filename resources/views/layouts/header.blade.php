@@ -1,6 +1,6 @@
 <div class="separate1">
     <div class="header-left">
-        <a href="{{ route('dashboard') }}" class="header-title" title="ダッシュボードへ"><i class="fa-solid fa-clipboard"></i>顧客情報管理システム</a>
+        <a href="{{ route('dashboard') }}" class="header-title" title="ダッシュボードへ"><i class="fa-solid fa-clipboard"></i>顧客管理システム</a>
         <div class="header-nav">
             <div class="customers-index">
                 <a href="{{ route('customers.index') }}">顧客一覧</a>
@@ -17,15 +17,11 @@
     @if (Auth::check())
     <div class="user-right">
         <div class="user-logged-name">
-            @if(Auth::check()) 
-                <p>{{ Auth::user()->user_name }}
-                @if(Auth::check() && Auth::user()->authority === 'admin')
-                <span class="admin">(管理者)</span></p>
-                @elseif(Auth::check() && Auth::user()->authority === 'sales')
-                <span class="sales">(営業担当者)</span></p> 
-                @endif
-            @else
-            <p>ログインしていません</p>
+            <p>{{ Auth::user()->user_name }}
+            @if(Auth::check() && Auth::user()->authority === 'admin')
+            <span class="admin">(管理者)</span></p>
+            @elseif(Auth::check() && Auth::user()->authority === 'sales')
+            <span class="sales">(営業担当者)</span></p> 
             @endif
         </div>
         <div class="logout">

@@ -1,0 +1,62 @@
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 1.25rem;
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none; /* 下線をなくす */
+    border: 1px solid transparent; /* デフォルトのボーダー */
+    border-radius: 0.25rem; /* 角丸 */
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+    white-space: nowrap;
+}
+
+/* アイコンとテキストの間隔 */
+.btn i {
+    margin-right: 0.5rem;
+}
+
+/* ホバー時 */
+.btn:hover {
+    opacity: 0.9;
+}
+
+.btn-info { /* あるいは .btn-edit のようなクラス名 */
+    color: #fff; /* 文字色は白 */
+    background-color: #007bff; /* もしくは #4285F4 (Googleの青), #17a2b8 など、青系の色 */
+    border-color: #007bff; /* 背景色と同じか、少し濃いめの青 */
+}
+
+.btn-info:hover {
+    background-color: #0056b3; /* ホバーで少し濃くする */
+    border-color: #004085;
+}
+
+.btn-back { 
+    color: #fff; 
+    background-color: #757575;
+    border-color: #5a5a5a;
+}
+
+.btn-back:hover {
+    background-color: #4d4c4c; 
+    border-color: #363636;
+}
+
+.btn-danger {
+    color: #ffe9e9; 
+    background-color: #fd4646; 
+    border-color: #5a5a5a; 
+}
+
+.btn-danger:hover {
+    background-color: #d82c2c; 
+    border-color: #bf1c1c;
+}
+
+.btn-danger:hover i.fas.fa-trash-alt {
+    color: #c82333; 
+}

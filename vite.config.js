@@ -10,4 +10,17 @@ export default defineConfig({
         }),
         tailwindcss(),
     ],
+    server: {
+        host: true,
+        port: 5173,
+        hmr: {
+            host: 'host.docker.internal', 
+            protocol: 'ws',
+            port: 5173,
+        },
+        watch: {
+            usePolling: true,
+        }
+    },
+    build: { manifest: true }
 });

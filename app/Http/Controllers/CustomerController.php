@@ -110,9 +110,16 @@ class CustomerController extends Controller
 
         //保存する
         try {
-            $customer = Customer::findOrFail($validated['id']);
-            $customer->update($validated);
-            $message = "{$validated['name']} さんの情報を更新しました。";
+            if (empty($validated['id'])) {
+                //新規登録
+                $customer = Customer::create($validated);
+                $message = "{$validated['name']} さんの顧客情報を登録しました。";
+            } else {
+                //更新
+                $customer = Customer::findOrFail($validated['id']);
+                $customer->update($validated);
+                $message = "{$validated['name']} さんの顧客情報を更新しました。";
+            }
 
             //成功したらセッションを削除してメッセージ
             $request->session()->forget('customer_data');

@@ -1,0 +1,86 @@
+.show-container {
+    display: flex;
+    max-width: 1500px;
+    padding: 1rem;
+    gap: 1rem;
+}
+
+.left {
+    flex: 5;
+}
+
+.name-information {
+    margin: 1rem;
+    padding-bottom: 0.8rem;
+    border-bottom: 1px solid #eee;
+}
+
+.left p {
+    padding: 0;
+    margin: 0;
+}
+
+.customer-name p {
+    font-size: 2rem;
+}
+
+.kana p {
+    color: rgb(134, 134, 134);
+}
+
+.information {
+    display: flex;
+}
+
+.basic-information {
+    flex: 1;
+    margin: 1rem;
+}
+
+.basic-information p {
+    margin-bottom: 0.3rem;
+}
+
+.contact-information p {
+    margin-bottom: 0.3rem;
+}
+
+.contact-information {
+    flex: 1;
+    margin: 1rem;
+}
+
+.right {
+    flex: 3;
+}
+
+.heading p {
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.user_name a {
+    color: rgb(87, 87, 87);
+    font-size: 1.1rem;
+}
+
+.user_name a:hover {
+    color: rgb(0, 0, 0);
+}
+
+.card.up,
+.card.down {
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.heading p,
+.heading p {
+    margin-bottom: 0.5rem; 
+}
+
+.sales-content p,
+.update p {
+    margin: 0; 
+    line-height: 1.5; 
+}

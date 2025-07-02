@@ -1,0 +1,168 @@
+.separate1 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.3rem 1.5rem;
+    background: white;
+    position: sticky;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+}
+
+.header-title {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: black;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.header-title i {
+    margin-right: 1rem;
+    color: rgb(51, 146, 209);
+}
+
+.header-nav {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.header-nav a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: black;
+    font-size: 1.3rem;
+    padding: 0.5rem 0.8rem;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.header-nav a:hover {
+    background-color: rgba(92, 169, 241, 0.2);
+    border-radius: 0.5rem;
+    color: #226bbe;
+}
+
+.user-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.admin {
+    color: #842029;
+    background: #f8d7da;
+    border-radius: 0.5rem;
+}
+
+.sales {
+    color: #004085;
+    background: #cce5ff;
+    border-radius: 0.5rem;
+}
+
+/* タイトルとかメッセージ部分 */
+.separate2 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 2.5rem;
+}
+
+.title {
+    font-size: 2rem;
+}
+
+.message-container {
+    position: fixed;
+    top: 5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    pointer-events: none;
+    z-index: 1000;
+    width: 80%;
+    max-width: 600px;
+    color: #fff;
+}
+
+.message.alert {
+    padding: 0.4rem 0.5rem;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: bold;
+    text-align: center;
+    color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* 成功メッセージの色 */
+.message.alert-success {
+    background-color: #28a745;
+}
+
+/* エラーメッセージの色 */
+.alert-danger { /* このように変更 */
+    background-color: #dc3545; /* 赤系の背景色 */
+    color: #fff; /* 文字色を白にするなど、見えやすい色に */
+}
+
+.header-actions {
+    display: flex;
+    gap: 1rem;
+}
+
+/* ログアウトボタン（リンクのような見た目） */
+.header-logout-btn {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 0.8rem;
+    color: #333;
+    text-decoration: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: normal;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.header-logout-btn:hover {
+    background-color: #f0f0f0;
+    border-radius: 0.25rem;
+    color: #3f3f3f;
+}
+
+.header-logout-btn i {
+    margin-right: 0.4rem;
+    font-size: 1.1em;
+}
+
+.title {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    text-decoration: none;
+    font-weight: bold;
+    color: #333;
+}
+
+.title i {
+    margin-right: 0.5rem;
+    /* アイコンとテキストの間隔 */
+    font-size: 1.3em;
+    /* アイコンのサイズ */
+    color: #696969;
+    /* アイコンの色 */
+}
+
+.title :hover i {
+    color: #2e2e2e;
+    /* ホバー時のアイコン色 */
+}

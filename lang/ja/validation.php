@@ -201,8 +201,14 @@ return [
         'is_admin'                  => '権限', 
 
         // Customerテーブル関連
+        'id' => 'ID',
+        'name' => '名前',
+        'name_kana' => 'かな',
+        'email' => 'メールアドレス',
+        'phone' => '電話番号',
+        'is_admin' => '権限',
         'customer_name'             => '顧客名', 
-        'customer_name_kana'        => '顧客名(かな)', 
+        'customer_name_kana'        => 'かな', 
         'postal_code'               => '郵便番号', 
         'area_id'                   => '都道府県', 
         'address'                   => '住所',

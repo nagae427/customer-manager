@@ -1,0 +1,35 @@
+body {
+    background-color: rgb(245, 248, 250);
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+main {
+    margin: 1.5rem;
+}
+
+input, /* 必要に応じて他のテキスト系inputも */
+select {
+    border: 1px solid #ddd; 
+    color: #333;
+    font-size: 1rem;
+    padding: 0 0.75rem;
+    /* ボックスモデルをborder-boxに設定して、paddingやborderを含めてwidth計算 */
+    box-sizing: border-box;
+    border-radius: 0.5rem;
+}
+
+input:focus,
+select:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.2);
+}
+
+.card {
+    background-color: #fff;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin: 0.5rem;
+}
